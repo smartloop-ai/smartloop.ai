@@ -71,20 +71,10 @@ description: Pack repeated prompts into skills that analyze documents and search
 ---
 ```
 
-## How the site runs
+## Deployment
 
-- **Hosting.** GitHub Pages. Every push to `main` builds and deploys
-  ([`deploy-pages.yml`](.github/workflows/deploy-pages.yml)). It also rebuilds
-  daily, because the download page bakes in the latest release at build time.
-- **No server.** The contact form and the installer downloads are routes on the
-  Smartloop API at `api.smartloop.ai` (see `src/utils/api.ts`). Set
-  `SLP_API_BASE_URL` to point a local build at another API.
-- **Redirects.** Pages can't redirect, so Cloudflare does it in front of the
-  site: `www.` to the apex, the retired `docs.smartloop.ai` host, old doc paths,
-  `/mac/release`-style download links, and `/install` to the latest Docent
-  install script.
-- **Theme.** Light by default for every visitor, whatever their system
-  setting. The navbar toggle switches to dark and remembers the choice.
+Merging to `main` publishes the site; there's nothing to deploy by hand. Pull
+requests are checked by CI first (type check and build).
 
 ## Contributing
 
