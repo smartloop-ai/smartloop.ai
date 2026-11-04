@@ -10,12 +10,14 @@ import useLatestRelease, {
 } from '../hooks/useLatestRelease';
 import {
   DirectDownloadBlock,
+  SnapStoreBlock,
   StoreBadgeFor,
   MAC_APP_STORE_URL,
   MS_STORE_URL,
   SNAP_STORE_URL,
 } from '../components/StoreBadge';
 import { useInstallerUrl } from '../utils/api';
+import useVisitorPlatform from '../hooks/useVisitorPlatform';
 import styles from './index.module.css';
 
 function MacIcon() {
@@ -53,17 +55,16 @@ type StudioCard = {
   recommended: string[];
   // Which of the two downloads leads the card.
   //
-  // Every platform leads with its store, and for the same reason on each: the
-  // store's build is the one that asks least of the visitor and reaches the
-  // most of them. The Mac App Store keeps the app updated and notarized for
-  // every Apple Silicon Mac the .dmg reaches. The Microsoft Store installs free
-  // apps with no Microsoft account, and its build sidesteps the SmartScreen
-  // warning a freshly signed .exe draws until it has earned reputation. The
-  // Snap Store's build runs on any distro with snapd, where the .deb reaches
-  // only Debian derivatives.
+  // Mac and Windows lead with our own installer: it ships the moment a release
+  // is published rather than when store review clears, it updates itself, and
+  // on the Mac it is not sandboxed, so Studio shares ~/.smartloop with the
+  // Docent CLI. Linux leads with the Snap Store, which publishes updates
+  // without a manual review and runs on any distro with snapd, where the .deb
+  // reaches only Debian derivatives.
   //
-  // The standalone installer stays on every card as the line underneath, for
-  // the visitor who would rather not sign in to a store at all.
+  // The other route stays on every card as the line underneath — the store for
+  // the visitor (or managed machine) that only installs from one, the .deb for
+  // the Linux visitor without snapd.
   lead: 'direct' | 'store';
   // The store this card leads with. When the store leads, its own badge says
   // all of this; these three are for the text link under an installer-led card,
@@ -92,7 +93,7 @@ const studioCards: StudioCard[] = [
       '10 GB free disk space',
     ],
     recommended: ['More unified memory is better — 24 GB or above'],
-    lead: 'store',
+    lead: 'direct',
     storeName: 'Mac App Store',
     storePreposition: 'on',
     storeHref: `${MAC_APP_STORE_URL}&ct=web-download`,
@@ -112,7 +113,7 @@ const studioCards: StudioCard[] = [
       '10 GB free disk space',
     ],
     recommended: ['More system RAM is better — 24 GB or above', 'A discrete NVIDIA GPU (RTX 40-series or newer, 8 GB+ VRAM)'],
-    lead: 'store',
+    lead: 'direct',
     storeName: 'Microsoft Store',
     storePreposition: 'from',
     storeHref: `${MS_STORE_URL}?cid=web-download`,
@@ -145,14 +146,17 @@ const studioCards: StudioCard[] = [
 export default function Download(): ReactNode {
   const { status, release } = useLatestRelease();
   const installerUrl = useInstallerUrl();
+  // The visitor's own platform gets the pink primary button; the other two
+  // cards, and every card until the platform is known, get the plain one.
+  const visitorPlatform = useVisitorPlatform();
 
   return (
     <div id="app" className="body">
       <Head>
         <title>Downloads | Smartloop</title>
-        <meta name="description" content="Get Smartloop Studio from the Mac App Store, Microsoft Store, or Snap Store — or download the standalone .dmg, .exe, or .deb installer. See system requirements for macOS, Windows, and Linux." />
+        <meta name="description" content="Download Smartloop Studio for Mac (.dmg), Windows (.exe), or Linux (Snap Store or .deb) — also on the Mac App Store and Microsoft Store. See system requirements for macOS, Windows, and Linux." />
         <meta property="og:title" content="Downloads | Smartloop" />
-        <meta property="og:description" content="Get Smartloop Studio from the Mac App Store, Microsoft Store, or Snap Store — or download the standalone .dmg, .exe, or .deb installer. See system requirements for macOS, Windows, and Linux." />
+        <meta property="og:description" content="Download Smartloop Studio for Mac (.dmg), Windows (.exe), or Linux (Snap Store or .deb) — also on the Mac App Store and Microsoft Store. See system requirements for macOS, Windows, and Linux." />
         <link rel="canonical" href="https://smartloop.ai/download/" />
       </Head>
       <div className="wrapper">
@@ -182,6 +186,7 @@ export default function Download(): ReactNode {
                 // actually carries that artifact; otherwise the card falls back
                 // to the store badge alone.
                 const artifact = findArtifact(release, card.platform, card.kind);
+                const variant = visitorPlatform === card.key ? 'primary' : 'secondary';
 
                 return (
                   // The badge and the direct link each carry their own click, so
@@ -207,17 +212,19 @@ export default function Download(): ReactNode {
                       ))}
                     </ul>
                     <div className={styles.downloadCardFoot}>
-                      {/* Every platform leads with its store's own badge and
-                          offers the installer on the line underneath. A card
-                          set to lead with the installer draws our block instead
-                          and names the store in that line; either way the card
-                          falls back to the badge alone when the release carries
-                          no installer for this platform. */}
+                      {/* A card set to lead with the installer draws our block
+                          and names the store on the line underneath; a
+                          store-led card draws the store's badge and offers the
+                          installer underneath (Linux draws the Snap Store as our
+                          own block, to match). Either way the card falls back
+                          to the badge alone when the release carries no
+                          installer for this platform. */}
                       {card.lead === 'direct' && artifact ? (
                         <>
                           <DirectDownloadBlock
                             platform={card.key}
                             size={formatSize(artifact.size)}
+                            variant={variant}
                           />
                           <p className={styles.downloadAltLine}>
                             or get it {card.storePreposition} the{' '}
@@ -233,7 +240,11 @@ export default function Download(): ReactNode {
                         </>
                       ) : (
                         <>
-                          <StoreBadgeFor platform={card.key} campaign="web-download" />
+                          {card.key === 'linux' ? (
+                            <SnapStoreBlock variant={variant} />
+                          ) : (
+                            <StoreBadgeFor platform={card.key} campaign="web-download" />
+                          )}
                           {artifact && (
                             <p className={styles.downloadAltLine}>
                               or download the{' '}

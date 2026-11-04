@@ -6,12 +6,15 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import useLatestRelease, { findArtifact, formatSize } from '../hooks/useLatestRelease';
 import {
+  DirectDownloadButton,
   MacAppStoreBadge,
   MicrosoftStoreBadge,
-  SnapStoreBadge,
+  SnapStoreButton,
+  MAC_APP_STORE_URL,
 } from '../components/StoreBadge';
 import DocentInstall from '../components/DocentInstall';
 import { useInstallerUrl } from '../utils/api';
+import useVisitorPlatform from '../hooks/useVisitorPlatform';
 import styles from './home.module.css';
 
 function Icon({ name }: { name: string }) {
@@ -222,28 +225,25 @@ const faqs = [
   },
 ];
 
-type StudioPlatform = 'macos' | 'linux' | 'windows' | 'unknown';
-
-// Smartloop Studio ships through the Microsoft Store on Windows. The
-// ms-windows-store: deep link launches the Store app directly (the user is
+// The ms-windows-store: deep link launches the Store app directly (the user is
 // already on Windows here); the download page uses the https web link instead.
 const MS_STORE_PROTOCOL = 'ms-windows-store://pdp/?productid=XPDLN9NR8DDLLK';
 
 
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
-  const [studioPlatform, setStudioPlatform] = useState<StudioPlatform | null>(null);
+  const studioPlatform = useVisitorPlatform();
   const [work, setWork] = useState(0);
   const { release } = useLatestRelease();
   const installerUrl = useInstallerUrl();
   // Latest Docent CLI version, baked in at build time (docusaurus.config.ts).
   const docentVersion = siteConfig.customFields?.docentVersion as string | null | undefined;
 
-  // Every platform leads with its store: the store keeps the app updated and
-  // signed, and asks less of the visitor than our own installer. The
-  // standalone installer is the line underneath, routed through the tracked
-  // redirect on the API. Each store link carries a campaign token naming
-  // this page, so the hand-off stays attributable in the store's analytics.
+  // Mac and Windows lead with our own installer, routed through the tracked
+  // redirect on the API: it ships as soon as a release is published and
+  // updates itself. Their store is the line underneath, carrying a campaign
+  // token naming this page so the hand-off stays attributable in the store's
+  // analytics. Linux leads with the Snap Store, with the .deb underneath.
   const dmg = findArtifact(release, 'darwin', 'dmg');
   const exe = findArtifact(release, 'win32', 'nsis');
   const deb = findArtifact(release, 'linux', 'deb');
@@ -256,46 +256,32 @@ export default function Home(): ReactNode {
     </p>
   );
 
+  const storeLine = (href: string, preposition: 'on' | 'from', name: string) => (
+    <p className={styles.ctaAlt}>
+      or get it {preposition} the{' '}
+      <a className={styles.textLink} href={href} {...(/^https?:/i.test(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{name}</a>
+    </p>
+  );
+
+  // Mac and Windows fall back to their store badge when the release carries no
+  // installer for the platform.
   const heroCta: { badge: ReactNode; alt: ReactNode } = (() => {
     if (studioPlatform === 'macos') {
-      return { badge: <MacAppStoreBadge campaign="web-home" />, alt: dmg ? altLine(installerUrl('darwin'), 'dmg', dmg.size) : null };
+      return dmg
+        ? { badge: <DirectDownloadButton platform="macos" />, alt: storeLine(`${MAC_APP_STORE_URL}&ct=web-home`, 'on', 'Mac App Store') }
+        : { badge: <MacAppStoreBadge campaign="web-home" />, alt: null };
     }
     if (studioPlatform === 'windows') {
-      return {
-        // The deep link launches the Store app in place.
-        badge: <MicrosoftStoreBadge href={MS_STORE_PROTOCOL} campaign="web-home" />,
-        alt: exe ? altLine(installerUrl('win32'), 'exe', exe.size) : null,
-      };
+      // The deep link launches the Store app in place.
+      return exe
+        ? { badge: <DirectDownloadButton platform="windows" />, alt: storeLine(`${MS_STORE_PROTOCOL}&cid=web-home`, 'from', 'Microsoft Store') }
+        : { badge: <MicrosoftStoreBadge href={MS_STORE_PROTOCOL} campaign="web-home" />, alt: null };
     }
     if (studioPlatform === 'linux') {
-      return { badge: <SnapStoreBadge />, alt: deb ? altLine(installerUrl('linux'), 'deb', deb.size) : null };
+      return { badge: <SnapStoreButton />, alt: deb ? altLine(installerUrl('linux'), 'deb', deb.size) : null };
     }
     return { badge: null, alt: null };
   })();
-
-  useEffect(() => {
-    if (typeof navigator === 'undefined') return;
-
-    const platform = navigator.platform.toLowerCase();
-    const userAgent = navigator.userAgent.toLowerCase();
-
-    if (platform.includes('mac') || userAgent.includes('mac os')) {
-      setStudioPlatform('macos');
-      return;
-    }
-
-    if (platform.includes('linux') || userAgent.includes('linux')) {
-      setStudioPlatform('linux');
-      return;
-    }
-
-    if (platform.includes('win') || userAgent.includes('windows')) {
-      setStudioPlatform('windows');
-      return;
-    }
-
-    setStudioPlatform('unknown');
-  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
