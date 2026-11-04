@@ -3,9 +3,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useInstallerUrl, type ReleasePlatform } from '../../utils/api';
 import styles from './styles.module.css';
 
-// Where each platform's build actually comes from. Smartloop Studio ships
-// through a store on every platform, so these listings are the only download
-// links the site hands out.
+// Each platform's store listing. Mac and Windows lead with our own installer
+// and offer these underneath; Linux leads with the Snap Store.
 export const MAC_APP_STORE_URL =
   'https://apps.apple.com/us/app/smartloop-studio/id6800891411?mt=12';
 
@@ -238,16 +237,29 @@ const DIRECT_PLATFORM: Record<
  * Deliberately not a store badge. This download comes from us, not a store, and
  * dressing it in a store's badge shape would read as an imitation of one — the
  * same plate and mark, promising a listing it does not lead to. So it is the
- * site's own primary button instead, with the platform mark trailing the word
- * rather than a lead line above it: the mark is what says which machine this is
- * for, so the label does not have to repeat it.
+ * plain black (or, on a dark page, white) plate with the platform mark leading
+ * the word: the mark is what says which machine this is for, so the label does
+ * not have to repeat it.
  *
  * It points at the API's tracked redirect (/v1/releases/download/:platform),
  * which logs the hit and 302s to the artifact — so unlike a store link it is measurable end to end, needs
  * no account to accept, and ships the moment a release is published rather than
  * when review clears.
  */
-export function DirectDownloadButton({ platform }: { platform: DirectPlatform }): ReactNode {
+// Primary is the brand pink, for the download the visitor most likely wants;
+// secondary is the plain panel, for the other platforms.
+type ButtonVariant = 'primary' | 'secondary';
+
+const variantClass = (base: string, variant: ButtonVariant) =>
+  variant === 'secondary' ? `${base} ${styles.secondary}` : base;
+
+export function DirectDownloadButton({
+  platform,
+  variant = 'primary',
+}: {
+  platform: DirectPlatform;
+  variant?: ButtonVariant;
+}): ReactNode {
   const { mark, name, platform: releasePlatform, format } = DIRECT_PLATFORM[platform];
   const path = useInstallerUrl()(releasePlatform);
 
@@ -255,11 +267,11 @@ export function DirectDownloadButton({ platform }: { platform: DirectPlatform })
     <a
       href={path}
       download
-      className={styles.directCta}
+      className={variantClass(styles.directCta, variant)}
       aria-label={`Download Smartloop Studio for ${name} (${format})`}
     >
-      <span>download</span>
       <Mark name={mark} />
+      <span>Download</span>
     </a>
   );
 }
@@ -276,9 +288,11 @@ export function DirectDownloadButton({ platform }: { platform: DirectPlatform })
 export function DirectDownloadBlock({
   platform,
   size,
+  variant = 'primary',
 }: {
   platform: DirectPlatform;
   size: string;
+  variant?: ButtonVariant;
 }): ReactNode {
   const { mark, name, platform: releasePlatform, format, covers } = DIRECT_PLATFORM[platform];
   const path = useInstallerUrl()(releasePlatform);
@@ -287,15 +301,55 @@ export function DirectDownloadBlock({
     <a
       href={path}
       download
-      className={styles.directBlock}
+      className={variantClass(styles.directBlock, variant)}
       aria-label={`Download Smartloop Studio for ${name} (${format}, ${size})`}
     >
-      <span className={styles.directBlockFormat}>
-        <Mark name={mark} />
-        Download
+      <Mark name={mark} />
+      <span className={styles.directBlockText}>
+        <span className={styles.directBlockFormat}>Download</span>
+        <span className={styles.directBlockMeta}>
+          {covers} · {size}
+        </span>
       </span>
-      <span className={styles.directBlockMeta}>
-        {covers} · {size}
+    </a>
+  );
+}
+
+/**
+ * Linux's lead download, drawn as our own button rather than Snapcraft's badge
+ * so all three platforms read as one set. It opens the Snap Store listing,
+ * which installs the snap and keeps it updated; the meta line says so, since
+ * unlike the Mac and Windows buttons this one does not start a file download.
+ */
+export function SnapStoreButton({ variant = 'primary' }: { variant?: ButtonVariant } = {}): ReactNode {
+  return (
+    <a
+      href={SNAP_STORE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={variantClass(styles.directCta, variant)}
+      aria-label="Get Smartloop Studio for Linux from the Snap Store"
+    >
+      <Mark name="linux" />
+      <span>Download</span>
+    </a>
+  );
+}
+
+/** The Snap Store button as a block, for the download page's Linux card. */
+export function SnapStoreBlock({ variant = 'primary' }: { variant?: ButtonVariant } = {}): ReactNode {
+  return (
+    <a
+      href={SNAP_STORE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={variantClass(styles.directBlock, variant)}
+      aria-label="Get Smartloop Studio for Linux from the Snap Store"
+    >
+      <Mark name="linux" />
+      <span className={styles.directBlockText}>
+        <span className={styles.directBlockFormat}>Download</span>
+        <span className={styles.directBlockMeta}>Snap Store · any distro</span>
       </span>
     </a>
   );
