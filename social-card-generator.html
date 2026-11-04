@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      font-style: normal;
+      font-weight: 100 900;
+      src: url('static/fonts/space-grotesk/400-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      font-family: 'Space Grotesk', sans-serif;
+      background: #080808;
+    }
+
+    .card {
+      width: 1200px;
+      height: 630px;
+      /* subtle pink glow top-left */
+      background: radial-gradient(ellipse 55% 60% at 10% 20%, rgba(236, 72, 153, 0.12) 0%, transparent 70%), #080808;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      position: relative;
+      overflow: visible;
+    }
+
+    /* ── left column ── */
+    .left {
+      flex: 0 0 560px;
+      height: 630px;
+      display: flex;
+      flex-direction: column;
+      padding: 44px 48px 20px 64px;
+      overflow: visible;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand img {
+      height: 22px;
+      width: auto;
+    }
+
+    .headline {
+      font-size: 52px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-top: auto;
+      margin-bottom: 12px;
+    }
+
+    .headline .accent {
+      color: #ec4899;
+    }
+
+    .tagline {
+      font-size: 18px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 16px;
+      line-height: 1.55;
+    }
+
+    .cta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      border-radius: 6px;
+      padding: 13px 26px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+
+    .cta svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.75;
+    }
+
+    /* ── right column ── */
+    .right {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* gradient fade on left edge */
+    .right::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100px;
+      height: 100%;
+      background: linear-gradient(to right, #080808, transparent);
+      z-index: 2;
+    }
+
+    .screenshot {
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      width: 680px;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .screenshot img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="left">
+      <div class="headline">
+        Frontier quality.<br><span class="accent">Local first.</span>
+      </div>
+      <div class="tagline">Open models orchestrated on the hardware you already own — documents, tools and web search, with your data never leaving the device.
+      </div>
+      <div class="cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+          <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+          <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+          <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+        </svg>
+        Download Beta
+      </div>
+    </div>
+    <div class="right">
+      <div class="screenshot">
+        <img src="static/img/smartloop-desktop.png" alt="Smartloop Studio" />
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

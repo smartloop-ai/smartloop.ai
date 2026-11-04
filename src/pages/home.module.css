@@ -1,0 +1,1453 @@
+/* =====================================================================
+   Home page — soft, rounded surfaces on the existing palette.
+
+   Every colour comes from the --sl-* tokens in custom.css, so both themes
+   keep Smartloop's ground, ink and pink. What changes here is the shape:
+   rounded cards with soft shadows instead of hairline boxes, medium-weight
+   display type, and mono kept to small labels.
+   ===================================================================== */
+.page {
+  --r-xl: 28px;
+  --r-lg: 20px;
+  --r-md: 14px;
+  --r-sm: 10px;
+  --shadow-soft: 0 1px 2px rgba(10, 10, 20, 0.04), 0 12px 40px -12px rgba(10, 10, 20, 0.12);
+  --shadow-lift: 0 2px 4px rgba(10, 10, 20, 0.05), 0 30px 80px -24px rgba(10, 10, 20, 0.22);
+  /* A tinted panel: the brand wash over the raised surface. */
+  --panel-tint: linear-gradient(140deg, rgba(236, 72, 153, 0.07) 0%, rgba(236, 72, 153, 0.015) 45%, rgba(236, 72, 153, 0.05) 100%);
+
+  min-height: 100vh;
+  background: var(--sl-ground);
+  color: var(--sl-fg);
+  font-family: var(--sl-display);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme='dark'] .page {
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 40px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 30px 80px -24px rgba(0, 0, 0, 0.75);
+  --panel-tint: linear-gradient(140deg, rgba(236, 72, 153, 0.09) 0%, rgba(255, 255, 255, 0.015) 45%, rgba(236, 72, 153, 0.06) 100%);
+}
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section {
+  padding: 96px 0 0;
+}
+
+/* ── type ───────────────────────────────────────────── */
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  font-family: var(--sl-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+}
+
+.kicker::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: var(--sl-accent);
+}
+
+.h2 {
+  font-family: var(--sl-display);
+  font-size: clamp(30px, 4.4vw, 52px);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--sl-white);
+  margin: 0;
+  max-width: 18ch;
+}
+
+.sub {
+  margin: 20px 0 0;
+  max-width: 56ch;
+  font-size: 1.04rem;
+  line-height: 1.65;
+  color: var(--sl-dim);
+}
+
+.sub code,
+.docentPoints code {
+  font-family: var(--sl-mono);
+  font-size: 0.88em;
+  background: var(--sl-accent-wash);
+  color: var(--sl-accent-text);
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+.accent {
+  color: var(--sl-accent);
+}
+
+.ruleLabel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 14px;
+  font-family: var(--sl-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+}
+
+.ruleLabel::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--sl-line);
+}
+
+.textLink {
+  color: var(--sl-fg);
+  text-decoration: underline;
+  text-decoration-color: var(--sl-line-2);
+  text-underline-offset: 3px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.textLink:hover {
+  color: var(--sl-accent-text);
+  text-decoration-color: var(--sl-accent);
+}
+
+.tag {
+  display: inline-flex;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--sl-line-2);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--sl-dim);
+}
+
+/* ── buttons ────────────────────────────────────────── */
+.btnPrimary,
+.btnSecondary,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 22px;
+  /* Matches the store badge's corner, so the row reads as one set. */
+  border-radius: var(--r-sm);
+  font-family: var(--sl-display);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.18s, background 0.18s, border-color 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.btnPrimary svg,
+.btnSecondary svg {
+  margin: 0 -2px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  gap: 8px;
+}
+
+/* A size or count riding along inside a button. */
+.btnMeta {
+  padding-left: 10px;
+  margin-left: 2px;
+  border-left: 1px solid currentColor;
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+
+.btnPrimary {
+  background: var(--sl-accent);
+  color: var(--sl-on-accent);
+  box-shadow: 0 8px 24px -10px rgba(236, 72, 153, 0.7);
+}
+
+.btnPrimary:hover {
+  background: var(--sl-accent-soft);
+  color: var(--sl-on-accent);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  background: var(--sl-panel);
+  color: var(--sl-white);
+  border: 1px solid var(--sl-line);
+  box-shadow: var(--shadow-soft);
+}
+
+.btnSecondary:hover {
+  background: var(--sl-panel);
+  color: var(--sl-white);
+  border-color: var(--sl-line-2);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btnGhost {
+  color: var(--sl-fg);
+  background: var(--sl-accent-wash);
+}
+
+.btnGhost:hover {
+  background: var(--sl-accent-wash);
+  color: var(--sl-accent-text);
+  text-decoration: none;
+}
+
+.ctaAlt {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--sl-dim);
+}
+
+/* ── hero ───────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 150px 0 72px;
+}
+
+/* A soft bloom of the brand pink behind the headline. */
+.heroGlow {
+  position: absolute;
+  top: -140px;
+  left: 50%;
+  width: min(1100px, 120vw);
+  height: 560px;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(40% 55% at 35% 45%, rgba(236, 72, 153, 0.22), transparent 70%),
+    radial-gradient(38% 50% at 65% 40%, rgba(244, 114, 182, 0.16), transparent 70%),
+    radial-gradient(30% 40% at 50% 70%, rgba(236, 72, 153, 0.08), transparent 70%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  margin: 0 0 28px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--sl-line);
+  background: color-mix(in srgb, var(--sl-panel) 70%, transparent);
+  backdrop-filter: blur(8px);
+  font-family: var(--sl-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+}
+
+.heroTitle {
+  font-family: var(--sl-display);
+  font-size: clamp(44px, 7.4vw, 92px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  color: var(--sl-white);
+  margin: 0;
+}
+
+.heroLede {
+  margin: 28px auto 0;
+  max-width: 58ch;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--sl-dim);
+}
+
+.heroCta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+/* The store badge keeps a quarter of its height clear on every side (Apple's
+   rule, 11px at 44px tall); the 14px gap clears it. */
+.heroCtaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.heroMeta {
+  margin: 0;
+  font-family: var(--sl-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--sl-dim);
+}
+
+/* Drifting chips either side of the headline. They need the room, so they
+   only appear once the headline has its full measure beside them. */
+.heroDrift {
+  display: none;
+  position: absolute;
+  top: 190px;
+  width: 30vw;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.heroDriftLeft {
+  left: -4vw;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 25%, #000 45%, transparent 95%);
+  mask-image: linear-gradient(to right, transparent, #000 25%, #000 45%, transparent 95%);
+}
+
+.heroDriftRight {
+  right: -4vw;
+  -webkit-mask-image: linear-gradient(to left, transparent, #000 25%, #000 45%, transparent 95%);
+  mask-image: linear-gradient(to left, transparent, #000 25%, #000 45%, transparent 95%);
+}
+
+@media (min-width: 1240px) {
+  .heroDrift {
+    display: flex;
+  }
+}
+
+.heroDrift .chip {
+  opacity: 0.75;
+}
+
+/* ── marquee ────────────────────────────────────────── */
+.marquee {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marqueeTrack {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+
+.marqueeReverse {
+  animation-direction: reverse;
+}
+
+.marqueeSlow {
+  animation-duration: 70s;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+  }
+}
+
+.chip {
+  flex: none;
+  padding: 10px 18px;
+  border-radius: var(--r-sm);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  box-shadow: 0 1px 2px rgba(10, 10, 20, 0.04);
+  font-size: 0.92rem;
+  color: var(--sl-fg);
+  white-space: nowrap;
+}
+
+/* ── window chrome shared by every mock ─────────────── */
+.windowBar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--sl-line);
+  font-size: 0.82rem;
+  color: var(--sl-white);
+}
+
+.windowBar > i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sl-line-2);
+  flex: none;
+}
+
+.windowTitle {
+  margin-left: 10px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pillLocal {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--sl-accent-wash);
+  border: 1px solid rgba(236, 72, 153, 0.25);
+  font-family: var(--sl-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sl-accent-text);
+  white-space: nowrap;
+}
+
+.pillLocal b,
+.runLive b,
+.runFoot b {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sl-accent);
+  animation: pulse 1.9s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ── product stage ──────────────────────────────────── */
+.stage {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* The recording is its own frame: no panel or padding of ours around it. */
+.stageWindow {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  line-height: 0;
+  box-shadow: var(--shadow-lift);
+}
+
+.stageVideo {
+  width: 100%;
+  display: block;
+  /* The recording's own size, so the frame holds its shape before the
+     video has loaded. */
+  aspect-ratio: 1298 / 1080;
+  background: var(--sl-ground);
+}
+
+/* The run, set as a dark terminal card hanging off the recording's
+   bottom-left corner. The recording's answer fills the middle and right of
+   the app; the left stays empty, so the card covers nothing that matters.
+   It is dark in both themes, the way a terminal is. */
+.stageRun {
+  position: absolute;
+  left: -44px;
+  bottom: -36px;
+  width: 330px;
+  border-radius: var(--r-lg);
+  background: #121218;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-lift);
+  font-family: var(--sl-mono);
+  font-size: 0.78rem;
+  color: #b9b9c4;
+  overflow: hidden;
+}
+
+.runHead {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7a7a88;
+}
+
+.runLive {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f472b6;
+}
+
+.runPrompt {
+  margin: 16px 16px 0;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4f4f5;
+}
+
+.runPrompt span {
+  color: #7a7a88;
+  margin-right: 10px;
+}
+
+.runSteps {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0 16px;
+}
+
+.runSteps li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+}
+
+.runSteps svg {
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  border-radius: 50%;
+  background: rgba(236, 72, 153, 0.18);
+  color: #f472b6;
+  flex: none;
+}
+
+.runSteps span {
+  width: 70px;
+  color: #b9b9c4;
+}
+
+.runSteps em {
+  font-style: normal;
+  color: #f4f4f5;
+}
+
+.runFoot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 0.68rem;
+  color: #7a7a88;
+}
+
+.stageCaption {
+  /* Clears the run card hanging below the recording. */
+  margin: 60px 0 0;
+  text-align: center;
+  font-family: var(--sl-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+}
+
+/* ── engine ─────────────────────────────────────────── */
+.engine {
+  margin-top: 96px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+  padding: 64px;
+  border-radius: var(--r-xl);
+  background: var(--panel-tint), var(--sl-panel);
+  border: 1px solid var(--sl-line);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 40px;
+  border-top: 1px solid var(--sl-line);
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.stats > div {
+  padding: 20px 16px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stats > div + div {
+  padding-left: 18px;
+  border-left: 1px solid var(--sl-line);
+}
+
+.stats strong {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--sl-white);
+  line-height: 1;
+}
+
+.stats small {
+  font-size: 0.9rem;
+  color: var(--sl-dim);
+}
+
+.stats span {
+  font-size: 0.84rem;
+  color: var(--sl-dim);
+}
+
+.engineChips {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+.engineChips .ruleLabel + .marquee {
+  margin-top: 0;
+}
+
+.engineChips .marquee + .ruleLabel {
+  margin-top: 22px;
+}
+
+/* ── what you do with it ────────────────────────────── */
+.work {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 56px;
+  align-items: start;
+  padding-top: 112px;
+}
+
+.workTabs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+.workPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--sl-line);
+  font-family: var(--sl-display);
+  font-size: 0.95rem;
+  color: var(--sl-fg);
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.workPill:hover {
+  background: var(--sl-accent-wash);
+  border-color: rgba(236, 72, 153, 0.25);
+  color: var(--sl-white);
+}
+
+.workPill svg {
+  color: var(--sl-dim);
+}
+
+.workCard {
+  width: 100%;
+  max-width: 460px;
+  box-sizing: border-box;
+  padding: 20px 22px;
+  border-radius: var(--r-lg);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  box-shadow: var(--shadow-soft);
+  animation: rise 0.35s ease-out;
+}
+
+.workCardTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: var(--sl-white);
+}
+
+.workCardTitle svg {
+  color: var(--sl-accent);
+}
+
+.workCardDesc {
+  margin: 10px 0 14px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--sl-dim);
+}
+
+.workCard .textLink {
+  font-size: 0.86rem;
+}
+
+.workStage {
+  position: sticky;
+  top: 120px;
+  padding: 48px 40px;
+  border-radius: var(--r-xl);
+  background: var(--panel-tint), var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+}
+
+.workWindow {
+  width: 100%;
+  border-radius: var(--r-lg);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+  animation: rise 0.35s ease-out;
+}
+
+.workRows {
+  list-style: none;
+  margin: 0;
+  padding: 10px 16px 14px;
+}
+
+.workRows li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.workRows li:last-child {
+  border-bottom: none;
+}
+
+.workRowIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--sl-accent-wash);
+  color: var(--sl-accent-text);
+  flex: none;
+}
+
+.workRowLabel {
+  font-size: 0.92rem;
+  color: var(--sl-white);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workRowMeta {
+  margin-left: auto;
+  font-family: var(--sl-mono);
+  font-size: 0.7rem;
+  color: var(--sl-dim);
+  white-space: nowrap;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── use case ───────────────────────────────────────── */
+.caseCard {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  border-radius: var(--r-xl);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.caseText {
+  padding: 44px;
+}
+
+.caseLead {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--sl-white);
+}
+
+.casePoints {
+  list-style: none;
+  margin: 24px 0 30px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.casePoints li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--sl-dim);
+}
+
+.casePoints li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sl-accent);
+}
+
+.casePoints b {
+  color: var(--sl-white);
+  font-weight: 500;
+}
+
+.caseActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.caseArt {
+  padding: 40px;
+  background: var(--panel-tint), var(--sl-ground);
+  display: flex;
+  align-items: center;
+}
+
+.caseWindow {
+  width: 100%;
+  border-radius: var(--r-lg);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+}
+
+.caseBody {
+  padding: 18px 20px 16px;
+}
+
+.caseAsk {
+  margin: 0 0 0 auto;
+  width: fit-content;
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px 14px 4px 14px;
+  background: var(--sl-accent-wash);
+  border: 1px solid rgba(236, 72, 153, 0.2);
+  font-size: 0.86rem;
+  color: var(--sl-white);
+}
+
+.caseGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1.1fr;
+  margin-top: 16px;
+  border: 1px solid var(--sl-line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.caseRow {
+  display: contents;
+}
+
+.caseHead,
+.caseRow span {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.caseRow:last-child span {
+  border-bottom: none;
+}
+
+.caseHead {
+  font-family: var(--sl-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+  background: var(--sl-ground);
+}
+
+.caseRow span {
+  font-size: 0.8rem;
+  color: var(--sl-fg);
+}
+
+.caseRow span:first-child {
+  color: var(--sl-white);
+  font-weight: 500;
+}
+
+.caseRow .caseFlag {
+  color: var(--sl-accent-text);
+}
+
+.caseRefs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.caseRefs span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 7px;
+  border: 1px solid var(--sl-line);
+  font-size: 0.72rem;
+  color: var(--sl-dim);
+}
+
+.caseRefs svg {
+  width: 12px;
+  height: 12px;
+}
+
+.caseModels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--sl-line);
+  font-family: var(--sl-mono);
+  font-size: 0.66rem;
+  color: var(--sl-dim);
+}
+
+.caseModels b {
+  color: var(--sl-accent-text);
+  font-weight: 500;
+}
+
+/* ── docent ─────────────────────────────────────────── */
+.docent {
+  margin-top: 96px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.docentText {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.docentPoints {
+  list-style: none;
+  margin: 26px 0 28px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.docentPoints li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.94rem;
+  color: var(--sl-dim);
+}
+
+.docentPoints svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--sl-accent);
+}
+
+.docentPoints b {
+  color: var(--sl-white);
+  font-weight: 500;
+}
+
+.docentText .ctaAlt {
+  margin-top: 12px;
+}
+
+.docentTerm {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  box-shadow: var(--shadow-lift);
+}
+
+.docentVideo {
+  width: 100%;
+  display: block;
+  /* Both recordings' size, so the window holds its shape before load. */
+  aspect-ratio: 872 / 656;
+}
+
+[data-theme='dark'] .docentLight,
+[data-theme='light'] .docentDark {
+  display: none;
+}
+
+/* ── how it works ───────────────────────────────────── */
+.steps {
+  list-style: none;
+  margin: 44px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.stepNum {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--sl-mono);
+  font-size: 0.68rem;
+  color: var(--sl-accent-text);
+}
+
+.stepNum::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--sl-line);
+}
+
+.stepTitle {
+  margin: 18px 0 8px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--sl-white);
+}
+
+.stepDesc {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--sl-dim);
+}
+
+/* ── docs ───────────────────────────────────────────── */
+.docsGrid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.docCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 56px 24px 24px;
+  border-radius: var(--r-lg);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.docCard:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+  border-color: rgba(236, 72, 153, 0.3);
+}
+
+.docTitle {
+  margin: 0;
+  font-size: 1.04rem;
+  font-weight: 500;
+  color: var(--sl-white);
+}
+
+.docDesc {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--sl-dim);
+}
+
+.docArrow {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sl-line);
+  color: var(--sl-dim);
+  transition: background 0.2s, color 0.2s;
+}
+
+.docCard:hover .docArrow {
+  background: var(--sl-accent);
+  color: var(--sl-on-accent);
+}
+
+/* ── faq ────────────────────────────────────────────── */
+.faqWrap {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 56px;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faqItem {
+  border-radius: var(--r-md);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  transition: box-shadow 0.2s;
+}
+
+.faqItem[open] {
+  box-shadow: var(--shadow-soft);
+}
+
+.faqQ {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--sl-white);
+}
+
+.faqQ::-webkit-details-marker {
+  display: none;
+}
+
+.faqQ::after {
+  content: '+';
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--sl-line);
+  color: var(--sl-dim);
+  font-family: var(--sl-mono);
+  transition: transform 0.2s, background 0.2s, color 0.2s;
+}
+
+.faqItem[open] .faqQ::after {
+  transform: rotate(45deg);
+  background: var(--sl-accent-wash);
+  color: var(--sl-accent-text);
+}
+
+.faqA {
+  margin: 0;
+  padding: 0 22px 20px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--sl-dim);
+}
+
+/* ── closing ────────────────────────────────────────── */
+.closing {
+  position: relative;
+  overflow: hidden;
+  margin-top: 112px;
+  padding: 88px 32px;
+  border-radius: var(--r-xl);
+  background: var(--panel-tint), var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.closing > *:not(.heroGlow) {
+  position: relative;
+  z-index: 1;
+}
+
+.closing .heroGlow {
+  top: -260px;
+  opacity: 0.7;
+}
+
+.closing .sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.closingTitle {
+  margin: 0;
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--sl-white);
+}
+
+.closingCta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.partners {
+  padding: 88px 0 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.partnersLabel {
+  margin: 0 0 22px;
+  font-family: var(--sl-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+}
+
+.partnerRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 220px));
+  gap: 14px;
+}
+
+.partnerTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84px;
+  padding: 0 24px;
+  border-radius: var(--r-lg);
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.partnerTile:hover {
+  border-color: var(--sl-line-2);
+  box-shadow: var(--shadow-soft);
+}
+
+.partnerTile img {
+  height: 26px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.partnerTile:hover img {
+  opacity: 1;
+}
+
+[data-theme='dark'] .partnerTile img.logoLight,
+[data-theme='light'] .partnerTile img.logoDark {
+  display: none;
+}
+
+/* ── responsive ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .stageCaption {
+    margin-top: 18px;
+  }
+
+  /* No room to overlap: the run drops under the recording. */
+  .stageRun {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: auto;
+    max-width: 420px;
+    margin: 16px 0 0 auto;
+  }
+
+  .engine,
+  .work,
+  .docent,
+  .faqWrap,
+  .caseCard {
+    grid-template-columns: 1fr;
+  }
+
+  .engine {
+    padding: 44px;
+  }
+
+  .workStage {
+    position: relative;
+    top: auto;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 40px;
+  }
+
+  .docsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding: 120px 0 48px;
+  }
+
+  .heroInner {
+    padding: 0 16px;
+  }
+
+  .section {
+    padding-top: 72px;
+  }
+
+  .stageRun {
+    margin: 14px 0 0;
+    max-width: none;
+  }
+
+  .engine,
+  .closing {
+    padding: 32px 20px;
+    border-radius: var(--r-lg);
+  }
+
+  .engine,
+  .docent {
+    margin-top: 72px;
+  }
+
+  .work {
+    padding-top: 80px;
+  }
+
+  .workStage {
+    padding: 20px 14px;
+    min-height: 0;
+    border-radius: var(--r-lg);
+  }
+
+  .stats strong {
+    font-size: 1.5rem;
+  }
+
+  .stats > div + div {
+    padding-left: 12px;
+  }
+
+  .caseText {
+    padding: 28px 22px;
+  }
+
+  .caseArt {
+    padding: 16px 12px;
+  }
+
+  .caseGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .caseHead,
+  .caseRow span {
+    padding: 8px;
+  }
+
+  .steps,
+  .docsGrid,
+  .partnerRow {
+    grid-template-columns: 1fr;
+  }
+
+  .partnerRow {
+    width: 100%;
+  }
+}

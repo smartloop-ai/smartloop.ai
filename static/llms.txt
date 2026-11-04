@@ -1,0 +1,32 @@
+# Smartloop
+
+> Smartloop is a local AI assistant that runs entirely on your own machine. It orchestrates open models across agents to read your documents, search the web, connect to external tools, and run reusable skills — with your models and data staying on-device. Available for macOS, Windows, and Linux.
+
+Smartloop picks and tunes the open models for your hardware, so there is nothing to download, compare, or configure. It exposes an OpenAI-compatible API endpoint, so existing integrations can point at a local instance instead of a hosted provider. Running locally is free; paid credits cover web search only.
+
+## Product
+
+- [Home](https://smartloop.ai/): What Smartloop is, who it is for, and how the local-first model works.
+- [Download](https://smartloop.ai/download/): Installers for macOS, Windows, and Linux, plus system requirements.
+- [Pricing](https://smartloop.ai/pricing/): Free to run locally; Pro adds web search credits. Enterprise deployment options.
+- [Contact](https://smartloop.ai/contact/): On-premise deployment, tuning on your own data, and team rollout.
+
+## Documentation
+
+- [Intro](https://smartloop.ai/docs/intro/): What Smartloop is and the core concepts behind local agent orchestration.
+- [Getting Started](https://smartloop.ai/docs/getting-started/): Install Smartloop Studio and create your first project.
+- [Local AI](https://smartloop.ai/docs/local-ai/): The OpenAI-compatible API endpoint — chat completions, project automation, and building integrations on a local instance.
+- [Model Orchestration](https://smartloop.ai/docs/model-orchestration/): How `sl-mini` routes each task to a model by required capability, so you never pick one.
+- [Bring your documents](https://smartloop.ai/docs/documents/): Index PDFs, scans, and images into a project; OCR and retrieval run on-device.
+- [Skills](https://smartloop.ai/docs/skills/): Package repeated prompts into reusable agent skills that analyze, search, and report.
+- [Connections](https://smartloop.ai/docs/mcp-servers/): Give a project new capabilities through Model Context Protocol (MCP) servers, scoped per project.
+- [Web Search](https://smartloop.ai/docs/web-search/): Hybrid search — only the query goes to the web; local models read, rank, and answer on-device, with per-answer source attribution.
+- [Personalizing your Project](https://smartloop.ai/docs/memory/): Project memory built from thumbs-up/thumbs-down feedback on responses.
+- [Docent - Command Line Interface](https://smartloop.ai/docs/command-line-tool/): Manage projects, documents, and skills from the terminal.
+- [Customizing Theme](https://smartloop.ai/docs/customizing-theme/): Bring your own theme; open source themes live in the studio-themes repository.
+
+## Optional
+
+- [Privacy Policy](https://smartloop.ai/privacy/)
+- [Terms](https://smartloop.ai/terms/)
+- [GitHub](https://github.com/smartloop-ai): Smartloop CLI, studio themes, and other open source repositories.

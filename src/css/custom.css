@@ -1,0 +1,783 @@
+/* Dark theme overrides to match web-app */
+[data-theme='dark'] {
+  --ifm-background-color: #000;
+  --ifm-background-surface-color: #1a1a1a;
+  --ifm-toc-border-color: #2a2a2a;
+  --ifm-font-family-base: 'Space Grotesk', sans-serif;
+  --ifm-heading-font-family: 'Space Grotesk', sans-serif;
+}
+
+a {
+  @apply text-inherit hover:text-inherit;
+}
+
+.sl-menu__item {
+  a {
+    @apply text-white;
+    @apply no-underline;
+  }
+}
+
+.header__big-container {
+  a.header__login {
+    @apply no-underline;
+    @apply text-white;
+  }
+
+  .header__sign {
+    @apply no-underline;
+    @apply text-black;
+  }
+}
+
+.breadcrumbs {
+  a {
+    @apply text-inherit;
+    @apply inline-block;
+  }
+
+  img,
+  svg {
+    @apply align-top inline-block;
+  }
+}
+
+/* Smartloop primary theme for info admonitions */
+.alert--info {
+  --ifm-alert-background-color: rgba(245, 158, 11, 0.12);
+  --ifm-alert-background-color-highlight: rgba(245, 158, 11, 0.2);
+  --ifm-alert-foreground-color: #fef3c7;
+  --ifm-alert-border-color: #f59e0b;
+}
+
+/* Smartloop primary theme for code blocks */
+.alert--info pre,
+.alert--info code {
+  background-color: #141416;
+  border: 1px solid #2a2a2e;
+}
+
+.markdown pre {
+  background-color: #141416;
+  border: 1px solid #2a2a2e;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.markdown code {
+  background-color: #141416;
+  color: #c4b5d4;
+  border: 1px solid #2a2a2e;
+}
+
+.navbar {
+  background-color: #0a0a0a;
+  @apply flex items-center;
+  @apply shadow-none;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.navbar__logo {
+  height: 22px;
+}
+
+.navbar__brand {
+  @apply flex items-center uppercase font-thin;
+
+  a {
+    @apply text-white;
+    @apply no-underline;
+  }
+}
+
+.navbar__items {
+  @apply my-10 relative;
+
+  a {
+    @apply flex items-center justify-start items-start;
+  }
+
+  .navbar__link {
+    @apply text-white font-semibold;
+
+    svg {
+      @apply hidden;
+    }
+  }
+}
+
+.markdown img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+.markdown ul {
+  list-style: '* ';
+  padding-left: 1.5rem;
+}
+
+.markdown ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+
+.markdown ul ul,
+.markdown ol ul {
+  list-style: '* ';
+}
+
+.markdown ul ul ul,
+.markdown ol ul ul {
+  list-style: '* ';
+}
+
+.markdown h1 {
+  @apply text-4xl;
+}
+
+.markdown h2 {
+  @apply text-2xl;
+}
+
+.markdown a {
+  @apply text-inherit;
+  @apply underline;
+  @apply text-pink-100;
+}
+
+
+.markdown h3 {
+  @apply text-xl;
+}
+
+.navbar-item-github::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url('/img/github-icon.svg') no-repeat center;
+  background-size: contain;
+}
+
+.body {
+  .wrapper {
+    a {
+      @apply no-underline;
+    }
+  }
+}
+
+/* Prevent flicker during page navigation */
+html {
+  background-color: #0a0a0a;
+}
+
+/* Smooth page transitions */
+#__docusaurus {
+  opacity: 1;
+  transition: opacity 0.15s ease-in-out;
+}
+
+/* Prevent layout shift during navigation */
+.navbar,
+.header {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Ensure consistent background during transitions */
+body {
+  background-color: #0a0a0a;
+  min-height: 100vh;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+.theme-doc-sidebar-container,
+.main-wrapper {
+  opacity: 1;
+  animation: fadeIn 0.15s ease-in;
+}
+
+/* Theme toggle tokens (dark defaults) */
+html,
+[data-theme='dark'] {
+  --sl-header-fg: #e4e4e7;
+  --sl-header-border: #3f3f46;
+  --sl-toggle-active-bg: rgba(255, 255, 255, 0.12);
+  --sl-toggle-active-fg: #f4f4f5;
+  --sl-toggle-muted: #a1a1aa;
+
+  /* Button tokens — every bordered button on the site draws from these so the
+     hero, header, pricing CTAs and form submits share one border treatment. */
+  --sl-btn-radius: 4px;
+  --sl-btn-border: #3f3f46;
+  --sl-btn-border-hover: #71717a;
+  --sl-btn-accent: #ec4899;
+  --sl-btn-accent-hover: #f472b6;
+  --sl-btn-accent-wash: rgba(236, 72, 153, 0.08);
+}
+
+/* ===================== Light theme ===================== */
+[data-theme='light'] {
+  --ifm-font-family-base: 'Space Grotesk', sans-serif;
+  --ifm-heading-font-family: 'Space Grotesk', sans-serif;
+  --ifm-background-color: #f5f5f5;
+  --sl-header-border: #cccccc;
+  --sl-header-muted: #737373;
+  --sl-header-fg: #525252;
+  --sl-toggle-active-bg: #e4e4e4;
+  --sl-toggle-active-fg: #171717;
+  --sl-toggle-muted: #737373;
+  --sl-input-bg: #ffffff;
+  --sl-input-border: #cccccc;
+  --sl-input-fg: #171717;
+  --sl-btn-border: #cccccc;
+  --sl-btn-border-hover: #a1a1aa;
+}
+
+html[data-theme='light'],
+[data-theme='light'] body,
+[data-theme='light'] .body {
+  background-color: #f5f5f5;
+}
+
+[data-theme='light'] .body {
+  color: #0a0a0a;
+}
+
+/* Header when condensed on scroll (default styling is dark) */
+[data-theme='light'] .header._header-scroll {
+  background-color: rgba(245, 245, 245, 0.85);
+  border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+}
+
+[data-theme='light'] .navbar {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+}
+
+[data-theme='light'] .navbar__brand a,
+[data-theme='light'] .navbar__link {
+  color: #0a0a0a;
+}
+
+/* GitHub icon is inverted (white) for the dark navbar — keep it dark on light */
+[data-theme='light'] .navbar-item-github.invert {
+  filter: none;
+}
+
+/* Custom header nav links (forced white by default) */
+[data-theme='light'] .sl-menu__item a {
+  color: #0a0a0a;
+}
+
+/* Mobile menu overlay is hardcoded black — make it light too */
+@media (max-width: 61.99875em) {
+  [data-theme='light'] .sl-menu__body,
+  [data-theme='light'] .sl-menu__body::before {
+    background-color: #f5f5f5;
+  }
+}
+
+/* Info admonition text is a light cream tuned for dark mode — darken for light */
+[data-theme='light'] .alert--info {
+  --ifm-alert-foreground-color: #78350f;
+}
+
+/* Markdown links are light pink for dark mode — use a readable pink on light */
+[data-theme='light'] .markdown a {
+  @apply text-pink-600;
+}
+
+[data-theme='light'] .markdown pre,
+[data-theme='light'] .markdown code {
+  background-color: #ededed;
+  border-color: rgba(204, 204, 204, 0.5);
+}
+
+[data-theme='light'] .markdown code {
+  color: #7c3aed;
+}
+
+/* Landing/custom pages hardcode dark Tailwind text colors — remap for light */
+[data-theme='light'] #app .text-zinc-100 { color: #0a0a0a; }
+[data-theme='light'] #app .text-zinc-200 { color: #171717; }
+[data-theme='light'] #app .text-zinc-300 { color: #404040; }
+[data-theme='light'] #app .text-zinc-400 { color: #737373; }
+[data-theme='light'] #app .text-zinc-500 { color: #737373; }
+[data-theme='light'] #app .text-zinc-600 { color: #8a8a8a; }
+[data-theme='light'] #app .border-zinc-800 { border-color: rgba(204, 204, 204, 0.5); }
+[data-theme='light'] #app img.invert { filter: grayscale(1); }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.95;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+/* =====================================================================
+   Design tokens — one palette every page draws from.
+
+   The landing pages used to hardcode zinc hexes per component, which is
+   why the light theme needed a block of per-class remaps at the bottom of
+   this file. Everything new is written against these variables instead, so
+   a theme is a palette swap and nothing else.
+   ===================================================================== */
+html,
+[data-theme='dark'] {
+  --sl-ground: #08080a;
+  /* Recessed surfaces: code, install boxes, terminal chrome. */
+  --sl-ink: #0c0c10;
+  /* Raised surfaces: cards, panels. */
+  --sl-panel: #101014;
+  --sl-line: rgba(255, 255, 255, 0.07);
+  --sl-line-2: rgba(255, 255, 255, 0.15);
+  /* The background grid is drawn a step above the hairlines: it sits under a
+     radial mask that eats most of its contrast. */
+  --sl-grid: rgba(255, 255, 255, 0.055);
+  --sl-fg: #b9b9c4;
+  --sl-white: #f4f4f5;
+  --sl-dim: #7a7a88;
+  /* The accent is Smartloop's own pink (#EC4899) — the brand colour the app's
+     default theme and the docs both carry — not an approximation of it. */
+  --sl-accent: #ec4899;
+  --sl-accent-soft: #f472b6;
+  /* A muted accent for section labels and rules — present, not shouting. */
+  --sl-accent-deep: #9c4470;
+  /* Small accent-coloured text. The same pink on dark, where it has all the
+     contrast it needs; only the light theme steps it down. */
+  --sl-accent-text: #ec4899;
+  --sl-accent-wash: rgba(236, 72, 153, 0.07);
+  /* The accent is a bright mid-tone, so its legible partner is ink rather
+     than white — in both themes. */
+  --sl-on-accent: #0a0a0f;
+
+  --sl-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sl-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Square, not rounded: the chrome is drawn with rules, like a schematic. */
+  --sl-btn-radius: 0px;
+  --sl-btn-border: var(--sl-line-2);
+  --sl-btn-border-hover: var(--sl-dim);
+  --sl-btn-accent: var(--sl-accent);
+  --sl-btn-accent-hover: var(--sl-accent-soft);
+  --sl-btn-accent-wash: var(--sl-accent-wash);
+}
+
+[data-theme='light'] {
+  --sl-ground: #f6f6f7;
+  --sl-ink: #ffffff;
+  --sl-panel: #ffffff;
+  --sl-line: rgba(10, 10, 20, 0.10);
+  --sl-line-2: rgba(10, 10, 20, 0.20);
+  --sl-fg: #45454f;
+  --sl-white: #0a0a0f;
+  --sl-dim: #71717a;
+  /* The brand pink itself, unshifted: fills, rules and display type carry
+     the brand colour in both themes. Only small text steps down — #EC4899
+     lands near 3.3:1 on this ground, which is fine under a 44px headline
+     and not under an 11px label. */
+  --sl-accent: #ec4899;
+  --sl-accent-soft: #ef6bad;
+  --sl-accent-deep: #a22463;
+  --sl-accent-text: #b3286e;
+  --sl-accent-wash: rgba(236, 72, 153, 0.06);
+  --sl-grid: rgba(10, 10, 20, 0.055);
+}
+
+html,
+[data-theme='light'],
+[data-theme='light'] body,
+[data-theme='light'] .body {
+  background-color: var(--sl-ground);
+}
+
+body {
+  background-color: var(--sl-ground);
+  font-family: var(--sl-display);
+}
+
+/* ── header nav: same voice as the rest of the chrome (mono, lowercase) ──
+   The casing is a text-transform rather than typed into the markup, so the
+   link still reads "Pricing" to a screen reader and in the source. */
+@media (min-width: 62em) {
+  .sl-menu__list {
+    gap: 26px;
+  }
+
+  .sl-menu__item a.sl-menu__link {
+    font-family: var(--sl-mono);
+    font-size: 0.76rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+    color: var(--sl-dim);
+    transition: color 0.18s;
+  }
+
+  .sl-menu__item a.sl-menu__link:hover {
+    color: var(--sl-white);
+  }
+}
+
+/* ── site footer ───────────────────────────────────── */
+.sl-footer {
+  border-top: 1px solid var(--sl-line);
+  padding: 30px 28px;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  color: var(--sl-dim);
+}
+
+.sl-footer__links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.sl-footer a {
+  color: var(--sl-dim);
+  transition: color 0.18s;
+}
+
+.sl-footer a:hover {
+  color: var(--sl-accent);
+}
+
+/* ── docs chrome on the same palette as the marketing pages ────────────
+   The docs used to paint their own near-blacks (#0a0a0a, #141416, #2a2a2e),
+   which read as a slightly different site once the landing pages moved to
+   tokens. */
+.navbar,
+[data-theme='light'] .navbar {
+  background-color: var(--sl-ground);
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.markdown pre,
+.markdown code,
+.alert--info pre,
+.alert--info code,
+[data-theme='light'] .markdown pre,
+[data-theme='light'] .markdown code {
+  background-color: var(--sl-ink);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+}
+
+.markdown code {
+  color: var(--sl-accent-text);
+}
+
+[data-theme='light'] .markdown code {
+  color: var(--sl-accent-text);
+}
+
+.markdown a,
+[data-theme='light'] .markdown a {
+  color: var(--sl-accent-text);
+}
+
+/* ── header on the page's measure ──────────────────────
+   The header container is 1800px wide with a 20px gutter, so the logo and
+   the sign-up button sat ~135px outside the 1180px column everything below
+   them lines up with. Below 62em the header switches to its own mobile
+   grid, which keeps its narrower gutter. */
+/* app.css is injected as a client module, so it lands after this file; the
+   extra `.header` qualifier is what wins the tie. The gutter tracks .shell's
+   at both breakpoints, including in the header's mobile layout, so the logo
+   and the buttons never sit a few pixels off the column below them. */
+.header .header__big-container {
+  max-width: 1180px;
+  padding: 0 28px;
+}
+
+@media (max-width: 768px) {
+  .header .header__big-container {
+    padding: 0 20px;
+    /* A third column keeps the theme switch on the header row; with two
+       columns it wrapped onto a second row and overlapped the hero. */
+    /* Logo on the content edge; the controls (theme switch, menu) sit
+       together on the right. */
+    grid-template-columns: 1fr auto auto;
+    column-gap: 14px;
+  }
+
+  .header .header__logo {
+    order: 1;
+    text-align: left;
+  }
+
+  .header .header__registration {
+    order: 2;
+    justify-content: flex-end;
+  }
+
+  .header .header__menu {
+    order: 3;
+    justify-content: flex-end;
+  }
+}
+
+/* The hamburger bars are hardcoded near-white in app.css, which vanishes
+   on the light theme. The open menu overlay is black, so the X keeps it. */
+.header .sl-menu:not(.menu-open) .icon-menu span,
+.header .sl-menu:not(.menu-open) .icon-menu::before,
+.header .sl-menu:not(.menu-open) .icon-menu::after {
+  background-color: var(--sl-fg);
+}
+
+/* The footer is already on that measure; keep its gutter identical to the
+   shell's at the same breakpoint. */
+@media (max-width: 768px) {
+  .sl-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* =====================================================================
+   Docs, on the same design as the rest of the site.
+
+   Infima's own variables do most of the work: point its primary at the
+   brand accent, its faces at the two the marketing pages use, and its
+   global radius at zero, and the default theme stops looking like the
+   default theme. What follows tunes the parts Infima draws with its own
+   colours — sidebar, TOC, pagination, admonitions.
+   ===================================================================== */
+html,
+[data-theme='dark'],
+[data-theme='light'] {
+  --ifm-color-primary: var(--sl-accent);
+  --ifm-color-primary-dark: var(--sl-accent);
+  --ifm-color-primary-darker: var(--sl-accent);
+  --ifm-color-primary-darkest: var(--sl-accent);
+  --ifm-color-primary-light: var(--sl-accent-soft);
+  --ifm-color-primary-lighter: var(--sl-accent-soft);
+  --ifm-color-primary-lightest: var(--sl-accent-soft);
+
+  --ifm-font-family-base: var(--sl-display);
+  --ifm-heading-font-family: var(--sl-display);
+  --ifm-font-family-monospace: var(--sl-mono);
+  --ifm-heading-font-weight: 700;
+
+  /* Square, like every other surface on the site. */
+  --ifm-global-radius: 0;
+  --ifm-code-border-radius: 0;
+  --ifm-pre-border-radius: 0;
+  --ifm-alert-border-radius: 0;
+  --ifm-button-border-radius: 0;
+
+  --ifm-background-color: var(--sl-ground);
+  --ifm-background-surface-color: var(--sl-ink);
+  --ifm-toc-border-color: var(--sl-line);
+  --ifm-hr-border-color: var(--sl-line);
+  --ifm-heading-color: var(--sl-white);
+  --ifm-font-color-base: var(--sl-fg);
+  --ifm-link-color: var(--sl-accent-text);
+  --ifm-menu-color: var(--sl-dim);
+  --ifm-menu-color-active: var(--sl-white);
+  --ifm-menu-color-background-active: transparent;
+  --ifm-menu-color-background-hover: var(--sl-accent-wash);
+  --ifm-toc-link-color: var(--sl-dim);
+  --ifm-breadcrumb-color-active: var(--sl-white);
+  --ifm-breadcrumb-item-background-active: transparent;
+  --ifm-navbar-background-color: var(--sl-ground);
+  --ifm-navbar-link-color: var(--sl-dim);
+  --ifm-navbar-link-hover-color: var(--sl-white);
+}
+
+/* Headings in the display face, set as tight as the landing page's.
+   Tailwind's preflight unsets heading weight (it inherits from body), which
+   is why --ifm-heading-font-weight alone left them at 400. */
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-family: var(--sl-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--sl-white);
+}
+
+.markdown h1 {
+  letter-spacing: -0.04em;
+}
+
+.markdown h2 {
+  margin-top: 2.6rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--sl-line);
+}
+
+/* Navbar links share the marketing header's voice. */
+.navbar__link,
+.navbar__brand {
+  font-family: var(--sl-mono);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+}
+
+/* ── sidebar: a list of rules, and the current page marked by one ──── */
+.theme-doc-sidebar-container {
+  border-right: 1px solid var(--sl-line) !important;
+}
+
+.menu {
+  padding: 1rem 0.75rem !important;
+}
+
+.menu__link {
+  border-radius: 0;
+  font-size: 0.86rem;
+  font-weight: 400;
+  padding: 7px 12px;
+  border-left: 2px solid transparent;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.menu__link:hover {
+  background: var(--sl-accent-wash);
+  color: var(--sl-white);
+}
+
+.menu__link--active {
+  border-left-color: var(--sl-accent);
+  color: var(--sl-white);
+  font-weight: 600;
+}
+
+/* ── table of contents ─────────────────────────────── */
+.table-of-contents {
+  border-left: 1px solid var(--sl-line);
+  font-size: 0.8rem;
+}
+
+.table-of-contents__link {
+  color: var(--sl-dim);
+}
+
+.table-of-contents__link--active,
+.table-of-contents__link:hover {
+  color: var(--sl-accent-text);
+}
+
+/* ── breadcrumbs, pagination ───────────────────────── */
+.breadcrumbs__item--active .breadcrumbs__link,
+.breadcrumbs__link {
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  text-transform: lowercase;
+  border-radius: 0;
+  background: none;
+  color: var(--sl-dim);
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--sl-white);
+}
+
+.pagination-nav__link {
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  transition: border-color 0.18s, background 0.18s;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--sl-accent);
+  background: var(--sl-accent-wash);
+}
+
+.pagination-nav__sublabel {
+  font-family: var(--sl-mono);
+  font-size: 0.7rem;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  color: var(--sl-dim);
+}
+
+.pagination-nav__label {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--sl-white);
+}
+
+/* ── admonitions: a rule on the accent side, not a rounded pill ───── */
+.theme-admonition,
+.alert {
+  border: 1px solid var(--sl-line);
+  border-left: 2px solid var(--sl-accent);
+  border-radius: 0;
+  background: var(--sl-accent-wash);
+  color: var(--sl-fg);
+  box-shadow: none;
+}
+
+.theme-admonition .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
+.theme-admonition h5 {
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sl-accent-text);
+}
+
+/* The info admonition had its own amber palette; it joins the rest. */
+.alert--info {
+  --ifm-alert-background-color: var(--sl-accent-wash);
+  --ifm-alert-background-color-highlight: var(--sl-accent-wash);
+  --ifm-alert-foreground-color: var(--sl-fg);
+  --ifm-alert-border-color: var(--sl-accent);
+}
+
+[data-theme='light'] .alert--info {
+  --ifm-alert-foreground-color: var(--sl-fg);
+}
+
+/* ── tables ────────────────────────────────────────── */
+.markdown table {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+}
+
+.markdown table th {
+  font-family: var(--sl-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--sl-line-2);
+}
+
+.markdown table td {
+  border: none;
+  border-bottom: 1px solid var(--sl-line);
+}
+
+/* Figures rendered as components (e.g. ThemedImage) aren't wrapped in a <p>,
+   so give them the same spacing a markdown image gets */
+.markdown .doc-figure {
+  margin-bottom: var(--ifm-paragraph-margin-bottom);
+}

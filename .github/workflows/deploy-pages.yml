@@ -1,0 +1,74 @@
+# Builds the site and publishes it to GitHub Pages (smartloop.ai).
+#
+# The build bakes in the latest Studio release and Docent version
+# (docusaurus.config.ts), so besides every merge to main it also runs daily
+# and on demand: a new release shows on the site after the next run. The
+# release pipeline can trigger one right away with a repository_dispatch of
+# type "release-published".
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 6 * * *'
+  repository_dispatch:
+    types: [release-published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer run waits rather than racing an in-flight one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # smartloop.ai/install* redirect to these in the docent repo (Cloudflare,
+      # slp-infra-project/cloudflare/website.tf). The copies here are what
+      # Pages answers if that rule is ever off. Extensionless names match the
+      # one-liners (curl -fsSL https://smartloop.ai/install | sh). The
+      # uninstall scripts (legacy slp) live in static/ and ship as they are.
+      - name: Fetch install scripts
+        run: |
+          base=https://raw.githubusercontent.com/smartloop-ai/docent/main
+          for f in install.sh install.ps1; do
+            curl -fsSL "$base/$f" -o "build/$f"
+          done
+          cp build/install.sh build/install
+          cp build/uninstall.sh build/uninstall
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

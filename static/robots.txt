@@ -1,0 +1,9 @@
+# https://smartloop.ai/robots.txt
+
+User-agent: *
+Allow: /
+
+# Renamed pages that only exist to redirect.
+Disallow: /support/
+
+Sitemap: https://smartloop.ai/sitemap.xml

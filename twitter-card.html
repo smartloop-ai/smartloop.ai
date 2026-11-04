@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1200px;
+      height: 675px;
+      overflow: hidden;
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0a0a0a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Subtle grid background */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Pink glow */
+    .glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 80px;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      color: #ec4899;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #ec4899, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 20px;
+      font-weight: 300;
+      color: #a1a1aa;
+      max-width: 700px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .features {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #71717a;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    .feature .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ec4899;
+      flex-shrink: 0;
+    }
+
+    .url {
+      position: absolute;
+      bottom: 36px;
+      right: 48px;
+      font-size: 16px;
+      font-weight: 300;
+      color: #52525b;
+      letter-spacing: 0.08em;
+    }
+
+    .logo-mark {
+      position: absolute;
+      bottom: 36px;
+      left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark img {
+      width: 28px;
+      height: 28px;
+      filter: brightness(0) invert(1);
+      opacity: 0.4;
+    }
+
+    .logo-mark span {
+      font-size: 14px;
+      font-weight: 300;
+      color: #52525b;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="card">
+    <div class="badge">Coming Soon</div>
+    <h1>Smartloop <span>Studio</span></h1>
+    <p class="tagline">
+      Run AI on your own machine — connect tools, build custom skills, and get things done without sending your data anywhere.
+    </p>
+    <div class="features">
+      <div class="feature"><div class="dot"></div> Local Models</div>
+      <div class="feature"><div class="dot"></div> MCP Servers</div>
+      <div class="feature"><div class="dot"></div> Custom Skills</div>
+      <div class="feature"><div class="dot"></div> Local Agents</div>
+      <div class="feature"><div class="dot"></div> OpenAI Compatible</div>
+    </div>
+  </div>
+  <div class="logo-mark">
+    <span>Smartloop</span>
+  </div>
+  <div class="url">smartloop.ai</div>
+</body>
+</html>

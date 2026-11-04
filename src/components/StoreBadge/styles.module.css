@@ -1,0 +1,170 @@
+/*
+ * A store's badge: the vendor's own artwork, linked.
+ *
+ * Nothing of ours is drawn on it — no plate, no keyline, no radius, no tint —
+ * because all three stores require their badge be used exactly as published,
+ * and because the badge is the thing a visitor is scanning for. A near miss
+ * reads as a counterfeit of it, which is worse than no badge at all.
+ *
+ * That leaves only the link around the artwork to style. Hover lifts the badge
+ * rather than touching it. Focus draws a ring, which does land inside the clear
+ * space the guidelines ask for — the alternative is a call to action a keyboard
+ * cannot see, and that trade goes to the keyboard every time.
+ */
+.badge {
+  display: inline-block;
+  /* The artwork is the button, so the link is only its box: no line-height of
+     its own to add a sliver under the image. */
+  line-height: 0;
+  text-decoration: none;
+  transition: transform 0.18s;
+}
+
+.badge:hover,
+.badge:focus-visible {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.badge:focus-visible {
+  outline: 2px solid var(--sl-accent);
+  outline-offset: 4px;
+}
+
+/* Sized by the width/height the component sets from each badge's own ratio, so
+   the artwork is never stretched; this only keeps it from overflowing a narrow
+   card. */
+.badgeArt {
+  height: auto;
+  max-width: 100%;
+}
+
+/* The two plates each store publishes. The site's own default ground is dark,
+   so the light-ink badge is the one that shows until [data-theme='light'] says
+   otherwise. */
+.badgeArtDark {
+  display: block;
+}
+
+.badgeArtLight {
+  display: none;
+}
+
+[data-theme='light'] .badgeArtDark {
+  display: none;
+}
+
+[data-theme='light'] .badgeArtLight {
+  display: block;
+}
+
+.mark {
+  width: 21px;
+  height: 21px;
+  flex: none;
+  fill: currentColor;
+}
+
+/*
+ * The hero's download button.
+ *
+ * Not the store lockup above: this download comes from us, so wearing a store's
+ * two-line badge shape would read as an imitation of one. It is the site's own
+ * primary button — the same plate, mono type and square corners as every other
+ * button here — with the platform mark trailing the word. The mark carries the
+ * platform, so the label is just the verb.
+ */
+.directCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px;
+  background: var(--sl-accent);
+  border: 1px solid var(--sl-accent);
+  border-radius: 0;
+  color: var(--sl-on-accent);
+  font-family: var(--sl-mono);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  text-decoration: none;
+  transition: filter 0.18s, transform 0.18s;
+}
+
+.directCta:hover,
+.directCta:focus-visible {
+  filter: brightness(1.12);
+  color: var(--sl-on-accent);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.directCta:focus-visible {
+  outline: 2px solid var(--sl-white);
+  outline-offset: 2px;
+}
+
+/* The mark rides the button's own ink rather than the black plate's white. */
+.directCta .mark {
+  width: 15px;
+  height: 15px;
+}
+
+/*
+ * The same download as a block, for the download page's cards.
+ *
+ * The card header already says Mac, so the block leads with what the visitor
+ * still does not know — the file and what it covers. A full-width rule rather
+ * than a plate: three of these sit side by side, and none of them is the one to
+ * point at.
+ */
+.directBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  min-height: 74px;
+  padding: 14px 18px;
+  background: none;
+  border: 1px solid var(--sl-line-2);
+  border-radius: 0;
+  text-decoration: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.directBlock:hover,
+.directBlock:focus-visible {
+  border-color: var(--sl-accent);
+  background: var(--sl-accent-wash);
+  text-decoration: none;
+}
+
+.directBlock:focus-visible {
+  outline: 2px solid var(--sl-white);
+  outline-offset: 2px;
+}
+
+.directBlockFormat {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--sl-white);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.directBlockFormat .mark {
+  width: 17px;
+  height: 17px;
+}
+
+.directBlockMeta {
+  color: var(--sl-dim);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  text-align: center;
+}

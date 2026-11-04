@@ -1,0 +1,2991 @@
+.page {
+  min-height: 100vh;
+  background: var(--sl-ground);
+  color: var(--sl-fg);
+  font-family: var(--sl-display);
+  position: relative;
+  overflow: hidden;
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1200px;
+  background-image:
+    linear-gradient(to right, var(--sl-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--sl-grid) 1px, transparent 1px);
+  background-size: 76px 76px;
+  -webkit-mask-image: radial-gradient(110% 70% at 50% 0%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(110% 70% at 50% 0%, #000 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page::after {
+  content: '';
+  position: absolute;
+  top: -380px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, var(--sl-accent-wash) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page>* {
+  position: relative;
+  z-index: 1;
+}
+
+.comingSoonBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--sl-accent-wash);
+  border-bottom: 1px solid var(--sl-accent);
+  padding: 10px 20px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.comingSoonBannerText {
+  color: var(--sl-dim);
+  font-size: 0.85rem;
+}
+
+.comingSoonBannerLink {
+  color: var(--sl-accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.comingSoonBannerLink:hover {
+  text-decoration: underline;
+  color: #f472b6;
+}
+
+.docsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--sl-line);
+  border-left: 1px solid var(--sl-line);
+}
+
+@media (max-width: 768px) {
+  .docsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .docsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.docCard {
+  background: none;
+  border: none;
+  border-right: 1px solid var(--sl-line);
+  border-bottom: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 24px 24px 22px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background 0.22s;
+  position: relative;
+}
+
+.docCard:hover {
+  background: var(--sl-accent-wash);
+  text-decoration: none;
+  transform: none;
+}
+
+.docCardTitle {
+  font-family: var(--sl-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--sl-white);
+  margin: 0;
+}
+
+.docCardDesc {
+  font-size: 0.82rem;
+  color: var(--sl-dim);
+  margin: 0;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.docCardArrow {
+  color: var(--sl-line-2);
+  font-family: var(--sl-mono);
+  font-size: 0.95rem;
+  margin-top: 10px;
+  transition: color 0.22s, transform 0.22s;
+}
+
+.docCard:hover .docCardArrow {
+  color: var(--sl-accent);
+  transform: translateX(4px);
+}
+
+.installBox {
+  background: var(--sl-ink);
+  border: 1px solid var(--sl-line-2);
+  border-radius: 0;
+  padding: 12px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--sl-mono);
+  font-size: 0.8rem;
+}
+
+.installBox code {
+  color: var(--sl-white);
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.faqList {
+  border-top: 1px solid var(--sl-line);
+}
+
+.faqItem {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--sl-line);
+  border-radius: 0;
+  overflow: hidden;
+  transition: background 0.2s;
+}
+
+.faqItem:hover {
+  background: var(--sl-accent-wash);
+}
+
+.faqQuestion {
+  padding: 20px 0;
+  cursor: pointer;
+  font-family: var(--sl-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--sl-white);
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+.faqQuestion::after {
+  content: '+';
+  margin-left: auto;
+  padding-left: 16px;
+  font-family: var(--sl-mono);
+  font-size: 1.1rem;
+  color: var(--sl-dim);
+  transition: transform 0.2s;
+}
+
+details[open] .faqQuestion::after {
+  content: '−';
+}
+
+.faqAnswer {
+  padding: 0 0 22px 34px;
+  color: var(--sl-dim);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 72ch;
+}
+
+.supportEmail {
+  color: var(--sl-accent-text);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid var(--sl-accent-text);
+}
+
+.supportEmail:hover {
+  color: var(--sl-accent);
+  border-bottom-color: var(--sl-accent);
+}
+
+.installBox code .prompt {
+  color: var(--sl-dim);
+  margin-right: 8px;
+  user-select: none;
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  color: var(--sl-dim);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.copyButton:hover {
+  color: var(--sl-white);
+}
+
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--sl-line);
+  border-left: 1px solid var(--sl-line);
+  counter-reset: why;
+}
+
+@media (max-width: 768px) {
+  .whyGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.whyCard {
+  background: none;
+  border: none;
+  border-right: 1px solid var(--sl-line);
+  border-bottom: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 34px 32px 38px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s;
+}
+
+.whyCard::before {
+  counter-increment: why;
+  content: '0' counter(why);
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  font-family: var(--sl-mono);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--sl-line);
+  pointer-events: none;
+}
+
+.whyCard:hover {
+  background: var(--sl-accent-wash);
+}
+
+.whyKicker {
+  display: inline-block;
+  align-self: flex-start;
+  color: var(--sl-dim);
+  font-family: var(--sl-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 18px;
+}
+
+.whyHeadline {
+  font-family: var(--sl-display);
+  font-size: 1.28rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--sl-white);
+  margin: 0 0 12px;
+  line-height: 1.22;
+  max-width: 24ch;
+}
+
+.whyDesc {
+  font-size: 0.92rem;
+  color: var(--sl-dim);
+  margin: 0;
+  line-height: 1.65;
+  max-width: 46ch;
+}
+
+/* ── features ────────────────────────────────────────
+   Six numbered rows rather than six boxes: a list reads as a spec sheet,
+   which is what this section is, and it stops the page being four card
+   grids stacked on top of each other. */
+.featureRows {
+  border-top: 1px solid var(--sl-line);
+}
+
+.featureRow {
+  display: grid;
+  grid-template-columns: 52px 1fr 1.45fr 24px;
+  gap: 24px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--sl-line);
+  transition: background 0.18s;
+}
+
+.featureRow:hover {
+  background: var(--sl-accent-wash);
+}
+
+.featureIcon {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--sl-line);
+  color: var(--sl-dim);
+  line-height: 1;
+  transition: border-color 0.18s;
+}
+
+.featureRow:hover .featureIcon {
+  border-color: var(--sl-accent);
+  color: var(--sl-accent);
+}
+
+.featureTitle {
+  font-family: var(--sl-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--sl-white);
+  margin: 0;
+}
+
+.featureNum {
+  display: inline-block;
+  width: 34px;
+  flex: none;
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  color: var(--sl-dim);
+}
+
+.featureDesc {
+  font-size: 0.9rem;
+  color: var(--sl-dim);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.featureArrow {
+  justify-self: end;
+  color: var(--sl-line-2);
+  font-family: var(--sl-mono);
+  transition: color 0.18s, transform 0.18s;
+}
+
+.featureRow:hover .featureArrow {
+  color: var(--sl-accent);
+  transform: translateX(4px);
+}
+
+@media (max-width: 760px) {
+  .featureRow {
+    grid-template-columns: 52px 1fr;
+    align-items: start;
+    row-gap: 10px;
+  }
+
+  .featureArrow {
+    display: none;
+  }
+
+  .featureDesc {
+    grid-column: 2;
+  }
+}
+
+.comingSoonBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1px solid var(--sl-line-2);
+  color: var(--sl-dim);
+  font-family: var(--sl-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  background: var(--sl-accent);
+  border: 1px solid var(--sl-accent);
+  color: var(--sl-on-accent);
+  font-family: var(--sl-mono);
+  font-weight: 500;
+  font-size: 0.78rem;
+  padding: 13px 20px;
+  border-radius: 0;
+  text-decoration: none;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  transition: filter 0.18s, transform 0.18s;
+}
+
+.primaryBtn:hover {
+  filter: brightness(1.12);
+  color: var(--sl-on-accent);
+  transform: translateY(-1px);
+}
+
+.downloadCta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.videoCaption {
+  margin: 14px auto 0;
+  text-align: left;
+  max-width: 1180px;
+  padding: 0 28px;
+  line-height: 1.5;
+  color: var(--sl-dim);
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
+.reqChip {
+  color: var(--sl-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.reqChip span {
+  border-bottom: 1px solid var(--sl-line-2);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.reqChip:hover {
+  color: var(--sl-accent);
+}
+
+.reqChip:hover span {
+  border-color: var(--sl-accent);
+}
+
+.betaTag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 0;
+  vertical-align: middle;
+}
+
+.studioBtn,
+.secondaryBtn {
+  background: transparent;
+  border: 1px solid var(--sl-btn-border);
+  color: var(--sl-dim);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 12px 32px;
+  border-radius: var(--sl-btn-radius);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.studioBtn:hover,
+.secondaryBtn:hover {
+  border-color: var(--sl-btn-border-hover);
+  color: var(--sl-white);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  transform: translateY(-1px);
+}
+
+.disabledBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--sl-btn-border);
+  color: var(--sl-dim);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 12px 20px;
+  border-radius: var(--sl-btn-radius);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: not-allowed;
+}
+
+.githubIcon {
+  width: 18px;
+  height: 18px;
+  filter: invert(0.65);
+}
+
+.heroSection {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Head pinned to the top, models and foot to the bottom; the run fills. */
+/* More room than the hero's panel: the run sits in a half-width pane, so the
+   head, run, models and foot share one wider inset. */
+.useCaseArt .artHead,
+.useCaseArt .runModels,
+.useCaseArt .artFoot {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.useCaseArt .artBody {
+  padding: 24px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .heroText {
+    align-items: center;
+  }
+}
+
+.heroVisual {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .heroVisual {
+    justify-content: center;
+  }
+}
+
+.terminalDemo {
+  max-width: 1024px;
+  width: 100%;
+  border-radius: 0;
+  border: 1px solid var(--sl-line-2);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px var(--sl-accent-wash);
+}
+
+.otherPlatforms {
+  display: flex;
+  gap: 20px;
+  margin-top: 12px;
+}
+
+.otherPlatforms a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--sl-dim);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.otherPlatforms a:hover {
+  color: var(--sl-white);
+}
+
+.videoWrapper {
+  width: 100%;
+  max-width: 1180px;
+  margin: 1.5rem auto 0;
+  line-height: 0;
+  padding: 0 28px;
+  box-sizing: border-box;
+}
+
+.videoWrapper video {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .videoWrapper {
+    padding: 0 1.5rem;
+  }
+}
+
+.desktopScreenshot {
+  width: 100%;
+  display: block;
+  border: none;
+}
+
+.prompt {
+  color: var(--sl-dim);
+  margin-right: 8px;
+  user-select: none;
+}
+
+.heroTitle {
+  font-family: var(--sl-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  color: var(--sl-white);
+}
+
+.studioAccent {
+  color: var(--sl-accent);
+}
+
+.dot {
+  color: var(--sl-accent);
+}
+
+/* Sits on the end of the lede's last word like a caret in a text field, so it
+   reads as part of the sentence rather than a mark parked beside it. Aligned
+   just under the baseline rather than to text-bottom: the box then fits inside
+   the line's own descender space and cannot grow the line box, which is what
+   was opening a gap under the paragraph. */
+.blinkingCursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background-color: var(--sl-dim);
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.downloadGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .downloadGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .downloadGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.downloadCard {
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.downloadCard:hover {
+  border-color: var(--sl-accent);
+  background: var(--sl-panel);
+  text-decoration: none;
+}
+
+.downloadCardDisabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.downloadCardDisabled:hover {
+  border-color: var(--sl-line);
+  background: var(--sl-panel);
+}
+
+.downloadCardAction {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: var(--sl-btn-radius);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--sl-btn-border);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--sl-white);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+/* The card's call-to-action block: the download the card leads with, and the
+   one line naming the other way to get it. */
+.downloadCardFoot {
+  margin-top: auto;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Same clear space as the hero — a quarter of the badge's height. */
+  gap: 12px;
+}
+
+/* The alternative under the block above. A sentence with one link in it rather
+   than a second button — the card has already made its recommendation. */
+.downloadAltLine {
+  margin: 0;
+  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--sl-dim);
+}
+
+.downloadAltLink {
+  color: var(--sl-white);
+  text-decoration: none;
+  border-bottom: 1px solid var(--sl-line-2);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.downloadAltLink:hover {
+  color: var(--sl-accent);
+  border-color: var(--sl-accent);
+  text-decoration: none;
+}
+
+.downloadCardAction svg {
+  transition: transform 0.25s ease;
+}
+
+.downloadCard:hover .downloadCardAction {
+  background: var(--sl-btn-accent);
+  border-color: var(--sl-btn-accent);
+  color: var(--sl-on-accent);
+}
+
+.downloadCard:hover .downloadCardAction svg {
+  transform: translateY(2px);
+}
+
+.downloadCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.downloadCardHeaderText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.downloadCardIcon {
+  color: var(--sl-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.downloadCardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--sl-white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.downloadCardMeta {
+  font-size: 0.7rem;
+  color: var(--sl-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.downloadInstallBox {
+  background: var(--sl-ink);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.downloadInstallBox code {
+  color: var(--sl-white);
+  background: none;
+  border: none;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.downloadInstallBox code::-webkit-scrollbar {
+  height: 4px;
+}
+
+.downloadInstallBox code::-webkit-scrollbar-thumb {
+  background: var(--sl-line-2);
+  border-radius: 0;
+}
+
+.downloadReqLabel {
+  font-size: 0.65rem;
+  color: var(--sl-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 8px 0 0;
+}
+
+.downloadReqList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.downloadReqList li {
+  font-size: 0.82rem;
+  color: var(--sl-dim);
+  line-height: 1.5;
+  padding-left: 18px;
+  position: relative;
+}
+
+.downloadReqList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sl-accent);
+  opacity: 0.7;
+}
+
+.downloadRecLabel {
+  font-size: 0.65rem;
+  color: var(--sl-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 16px 0 0;
+}
+
+.downloadRecList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.downloadRecList li {
+  font-size: 0.82rem;
+  color: var(--sl-dim);
+  line-height: 1.5;
+  padding-left: 18px;
+  position: relative;
+}
+
+.downloadRecList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sl-dim);
+}
+
+.downloadCardFooter {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.downloadCommandRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.downloadOsTabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--sl-ink);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 3px;
+}
+
+.downloadOsTab {
+  background: transparent;
+  border: none;
+  color: var(--sl-dim);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: background 0.2s, color 0.2s;
+}
+
+.downloadOsTab:hover {
+  color: var(--sl-white);
+}
+
+.downloadOsTabActive {
+  background: var(--sl-accent-wash);
+  color: var(--sl-accent);
+}
+
+/* ===================== Pricing ===================== */
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .pricingGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*
+ * Align every card row (name / price / description / CTA / features label /
+ * features) across the cards with subgrid, so the boxes read as one table
+ * instead of two independently stacked columns. The .planDesc min-height below
+ * is the fallback for browsers without subgrid.
+ */
+@media (min-width: 769px) {
+  @supports (grid-template-rows: subgrid) {
+    .pricingGrid {
+      grid-template-rows: auto auto auto auto auto auto;
+      row-gap: 0;
+    }
+
+    .planCard {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 6;
+      row-gap: 0;
+    }
+
+    .planDesc {
+      min-height: 0;
+    }
+  }
+}
+
+.planCard {
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s, background 0.3s, transform 0.2s;
+}
+
+/* Cards carry no padding of their own so the header rule can run edge to edge */
+.planCard > * {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.planCard:hover {
+  border-color: var(--sl-line-2);
+  transform: translateY(-2px);
+}
+
+.planCardFeatured {
+  border-color: var(--sl-accent);
+  box-shadow: 0 0 40px var(--sl-accent-wash);
+  position: relative;
+}
+
+.planCardFeatured:hover {
+  border-color: var(--sl-accent);
+}
+
+.planHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.planName {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--sl-white);
+  margin: 0;
+}
+
+.planBadge {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sl-accent);
+  background: var(--sl-accent-wash);
+  border: 1px solid var(--sl-accent);
+  border-radius: 0;
+  padding: 4px 10px;
+  line-height: 1;
+}
+
+.planPrice {
+  margin: 28px 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--sl-white);
+}
+
+.planPriceAmount {
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.planPriceUnit {
+  font-size: 0.9rem;
+  color: var(--sl-dim);
+}
+
+.planDesc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--sl-dim);
+  margin: 14px 0 0;
+  /* Reserve two lines so the CTAs stay aligned across cards */
+  min-height: 3em;
+}
+
+@media (max-width: 768px) {
+  .planDesc {
+    min-height: 0;
+  }
+}
+
+.planCtaRow {
+  margin-top: 26px;
+}
+
+.planFeaturesLabel {
+  font-size: 0.8rem;
+  color: var(--sl-dim);
+  margin: 28px 0 0;
+}
+
+.planFeatures {
+  list-style: none;
+  margin: 0;
+  padding-top: 16px;
+  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.planFeature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--sl-fg);
+  line-height: 1.45;
+}
+
+.planFeatureCheck {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  color: var(--sl-dim);
+  flex-shrink: 0;
+}
+
+.planCardFeatured .planFeatureCheck {
+  color: var(--sl-btn-accent);
+}
+
+.planCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--sl-line);
+  border: 1px solid var(--sl-btn-border);
+  color: var(--sl-white);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 14px 20px;
+  border-radius: var(--sl-btn-radius);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.planCta:hover {
+  background: var(--sl-line-2);
+  border-color: var(--sl-btn-border-hover);
+  color: var(--sl-white);
+  text-decoration: none;
+}
+
+[data-theme='dark'] .planCta.planCtaFeatured {
+  background: var(--sl-btn-accent);
+  border-color: var(--sl-btn-accent);
+  color: var(--sl-on-accent);
+}
+
+[data-theme='dark'] .planCta.planCtaFeatured:hover {
+  background: var(--sl-btn-accent-hover);
+  border-color: var(--sl-btn-accent-hover);
+  color: var(--sl-on-accent);
+}
+
+/*
+ * The band sits alone under two plan cards, one of them accented, and at the
+ * plan cards' own border weight it read as washed out rather than as the
+ * third offer. It carries a little more edge and its own surface step.
+ */
+.enterpriseCard {
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line-2);
+  border-radius: 0;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .enterpriseCard {
+    grid-template-columns: 1fr;
+    padding: 28px;
+  }
+}
+
+.enterpriseFeatures {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.enterpriseCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--sl-btn-accent);
+  color: var(--sl-btn-accent);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 12px 28px;
+  border-radius: var(--sl-btn-radius);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.enterpriseCta:hover {
+  background: var(--sl-btn-accent-wash);
+  border-color: var(--sl-btn-accent-hover);
+  color: var(--sl-btn-accent-hover);
+  text-decoration: none;
+}
+
+.pricingNote {
+  color: var(--sl-dim);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===================== Pricing light theme ===================== */
+[data-theme='light'] .planCard,
+[data-theme='light'] .enterpriseCard {
+  background: #f1f1f1;
+  border-color: rgba(204, 204, 204, 0.5);
+}
+
+[data-theme='light'] .enterpriseCard {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .planCardFeatured {
+  border-color: var(--sl-btn-accent);
+}
+
+[data-theme='light'] .planName,
+[data-theme='light'] .planPrice {
+  color: #0a0a0a;
+}
+
+
+[data-theme='light'] .planHeader {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .planFeaturesLabel,
+[data-theme='light'] .planPriceUnit {
+  color: var(--sl-dim);
+}
+
+[data-theme='light'] .planFeatureCheck {
+  color: var(--sl-dim);
+}
+
+[data-theme='light'] .planCta {
+  background: rgba(0, 0, 0, 0.04);
+  color: #27272a;
+}
+
+[data-theme='light'] .planCta:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #0a0a0a;
+}
+
+[data-theme='light'] .planCta.planCtaFeatured {
+  background: var(--sl-btn-accent);
+  border-color: var(--sl-btn-accent);
+  color: var(--sl-on-accent);
+}
+
+[data-theme='light'] .planCta.planCtaFeatured:hover {
+  background: var(--sl-btn-accent-hover);
+  border-color: var(--sl-btn-accent-hover);
+  color: var(--sl-on-accent);
+}
+
+[data-theme='light'] .pricingNote {
+  color: var(--sl-dim);
+}
+
+/* ===================== Light theme overrides ===================== */
+
+
+[data-theme='light'] .downloadCard {
+  background: #f1f1f1;
+  border-color: rgba(204, 204, 204, 0.5);
+}
+
+[data-theme='light'] .downloadCard:hover {
+  background: #ededed;
+}
+
+[data-theme='light'] .downloadCardTitle {
+  color: #0a0a0a;
+}
+
+
+
+
+[data-theme='light'] .downloadAltLine,
+[data-theme='light'] .downloadReqList li {
+  color: #737373;
+}
+
+[data-theme='light'] .downloadInstallBox,
+[data-theme='light'] .downloadOsTabs {
+  background: #ededed;
+  border-color: rgba(204, 204, 204, 0.5);
+}
+
+[data-theme='light'] .downloadCard:hover {
+  border-color: var(--sl-accent);
+  background: #ededed;
+}
+
+[data-theme='light'] .downloadCardAction {
+  background: rgba(0, 0, 0, 0.04);
+  color: #0a0a0a;
+}
+
+[data-theme='light'] .downloadCard:hover .downloadCardAction {
+  background: var(--sl-btn-accent);
+  border-color: var(--sl-btn-accent);
+  color: var(--sl-on-accent);
+}
+
+[data-theme='light'] .downloadCardIcon {
+  color: #0a0a0a;
+}
+
+[data-theme='light'] .downloadInstallBox code {
+  color: #171717;
+}
+
+
+[data-theme='light'] .terminalDemo {
+  border-color: transparent;
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.2);
+}
+/* ===================== Contact ===================== */
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.contactTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--sl-white);
+  margin: 20px 0 12px;
+}
+
+@media (min-width: 769px) {
+  .contactTitle {
+    font-size: 2.4rem;
+  }
+}
+
+.contactLead {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--sl-dim);
+  margin: 0 0 28px;
+  max-width: 42ch;
+}
+
+.contactTopicsLabel {
+  font-size: 0.8rem;
+  color: var(--sl-dim);
+  margin: 0 0 16px;
+}
+
+.contactTopics {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contactLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--sl-line);
+}
+
+.contactLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--sl-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contactLink:hover {
+  color: var(--sl-btn-accent);
+  text-decoration: none;
+}
+
+.contactCard {
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 32px;
+}
+
+@media (max-width: 768px) {
+  .contactCard {
+    padding: 24px;
+  }
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contactLabel {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--sl-dim);
+  margin-bottom: 8px;
+}
+
+.contactOptional {
+  opacity: 0.65;
+}
+
+.contactInput,
+.contactTextarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--sl-input-bg, var(--sl-ink));
+  border: 1px solid var(--sl-input-border, var(--sl-line-2));
+  border-radius: var(--sl-btn-radius);
+  color: var(--sl-input-fg, var(--sl-white));
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contactInput::placeholder,
+.contactTextarea::placeholder {
+  color: var(--sl-dim);
+}
+
+.contactInput:focus,
+.contactTextarea:focus {
+  border-color: var(--sl-btn-accent);
+  box-shadow: 0 0 0 3px var(--sl-btn-accent-wash);
+}
+
+.contactTextarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.contactInputError {
+  border-color: var(--sl-btn-accent);
+}
+
+.contactSubmit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--sl-btn-accent);
+  border: 1px solid var(--sl-btn-accent);
+  color: var(--sl-on-accent);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 14px 24px;
+  border-radius: var(--sl-btn-radius);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+}
+
+.contactSubmit:hover:not(:disabled) {
+  background: var(--sl-btn-accent-hover);
+  border-color: var(--sl-btn-accent-hover);
+}
+
+.contactSubmit:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.contactAlert {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: 12px 16px;
+  border-radius: var(--sl-btn-radius);
+  margin-bottom: 20px;
+}
+
+.contactAlertSuccess {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.contactAlertError {
+  background: var(--sl-btn-accent-wash);
+  border: 1px solid var(--sl-accent);
+  color: var(--sl-accent);
+}
+
+.contactNote {
+  font-size: 0.75rem;
+  color: var(--sl-dim);
+  text-align: center;
+  margin: 4px 0 0;
+}
+
+.richEditor {
+  background: var(--sl-input-bg, var(--sl-ink));
+  border: 1px solid var(--sl-input-border, var(--sl-line-2));
+  border-radius: var(--sl-btn-radius);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* .richEditor is declared after .contactInputError, so pair them to win */
+.richEditor.contactInputError {
+  border-color: var(--sl-btn-accent);
+}
+
+.richEditor:focus-within {
+  border-color: var(--sl-btn-accent);
+  box-shadow: 0 0 0 3px var(--sl-btn-accent-wash);
+}
+
+.richToolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--sl-input-border, var(--sl-line-2));
+}
+
+.richToolbarBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  border-radius: var(--sl-btn-radius);
+  color: var(--sl-dim);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.richToolbarBtn:hover {
+  background: var(--sl-line);
+  color: var(--sl-white);
+}
+
+.richToolbarBtnActive {
+  background: var(--sl-btn-accent-wash);
+  color: var(--sl-btn-accent);
+}
+
+.richEditorBody {
+  min-height: 140px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 12px 16px;
+  color: var(--sl-input-fg, var(--sl-white));
+  font-size: 0.9rem;
+  line-height: 1.6;
+  outline: none;
+}
+
+.richEditorBody[data-empty='true']::before {
+  content: attr(data-placeholder);
+  color: var(--sl-dim);
+  pointer-events: none;
+}
+
+.richEditorBody ul,
+.richEditorBody ol {
+  margin: 0 0 8px;
+  padding-left: 22px;
+}
+
+.richEditorBody p {
+  margin: 0 0 8px;
+}
+
+.richEditorBody a {
+  color: var(--sl-btn-accent);
+}
+
+.richEditorBody code {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85em;
+  background: var(--sl-line);
+  border-radius: 0;
+  padding: 1px 5px;
+}
+
+/* ===================== Contact light theme ===================== */
+[data-theme='light'] .contactCard {
+  background: #f1f1f1;
+  border-color: rgba(204, 204, 204, 0.5);
+}
+
+[data-theme='light'] .contactTitle {
+  color: #0a0a0a;
+}
+
+
+[data-theme='light'] .contactLinks {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .contactNote {
+  color: var(--sl-dim);
+}
+
+[data-theme='light'] .richToolbarBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #0a0a0a;
+}
+
+[data-theme='light'] .richEditorBody code {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.contactFieldError {
+  font-size: 0.75rem;
+  color: var(--sl-btn-accent);
+  margin: 8px 0 0;
+}
+
+/* ===================== Legal pages (terms / privacy) ===================== */
+.legalTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--sl-white);
+  margin: 20px 0 14px;
+}
+
+@media (min-width: 769px) {
+  .legalTitle {
+    font-size: 3rem;
+  }
+}
+
+.legalLead {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--sl-fg);
+  max-width: 60ch;
+  margin: 0 0 24px;
+}
+
+.legalMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.legalMetaPill {
+  font-size: 0.75rem;
+  color: var(--sl-fg);
+  background: var(--sl-ink);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 5px 14px;
+}
+
+.legalMetaLink {
+  font-size: 0.75rem;
+  color: var(--sl-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.legalMetaLink:hover {
+  color: var(--sl-accent-text);
+  text-decoration: none;
+}
+
+.legalGrid {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+@media (max-width: 996px) {
+  .legalGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Table of contents */
+.legalToc {
+  position: sticky;
+  top: 96px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+@media (max-width: 996px) {
+  .legalToc {
+    position: static;
+    max-height: none;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--sl-line);
+  }
+}
+
+.legalTocLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+  margin: 0 0 14px;
+}
+
+.legalTocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  counter-reset: legal-toc;
+}
+
+.legalTocLink {
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--sl-dim);
+  text-decoration: none;
+  padding: 7px 12px;
+  border-left: 2px solid var(--sl-line);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.legalTocLink:hover {
+  color: var(--sl-white);
+  background: var(--sl-accent-wash);
+  text-decoration: none;
+}
+
+.legalTocLinkActive {
+  color: var(--sl-accent-text);
+  border-left-color: var(--sl-accent-text);
+}
+
+.legalTocLinkActive:hover {
+  color: var(--sl-accent-text);
+}
+
+/* Document body */
+.legalProse {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--sl-fg);
+  max-width: 68ch;
+}
+
+.legalSection {
+  /* Clear the fixed header when jumping to an anchor */
+  scroll-margin-top: 96px;
+  padding-bottom: 36px;
+}
+
+.legalSection + .legalSection {
+  padding-top: 4px;
+}
+
+.legalSectionTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--sl-white);
+  margin: 0 0 16px;
+}
+
+.legalAnchor {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--sl-btn-accent);
+  opacity: 0;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.legalSectionTitle:hover .legalAnchor {
+  opacity: 1;
+}
+
+.legalAnchor:hover {
+  text-decoration: none;
+}
+
+.legalProse p {
+  margin: 0 0 14px;
+}
+
+.legalProse p:last-child {
+  margin-bottom: 0;
+}
+
+.legalProse strong {
+  color: var(--sl-white);
+  font-weight: 600;
+}
+
+.legalProse a {
+  color: var(--sl-accent-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--sl-accent);
+  transition: border-color 0.2s;
+}
+
+.legalProse a:hover {
+  border-bottom-color: var(--sl-btn-accent);
+  text-decoration: none;
+}
+
+.legalProse ul {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legalProse ul li {
+  position: relative;
+  padding-left: 22px;
+}
+
+/* Same bullet motif as the pricing and contact feature lists */
+.legalProse ul li::before {
+  content: '[x]';
+  position: absolute;
+  left: 0;
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  color: var(--sl-dim);
+}
+
+.legalIntro {
+  padding-bottom: 32px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--sl-line);
+}
+
+/* Closing contact card */
+.legalFooterCard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: var(--sl-panel);
+  border: 1px solid var(--sl-line);
+  border-radius: 0;
+  padding: 28px 32px;
+}
+
+.legalFooterTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--sl-white);
+  margin: 0 0 6px;
+}
+
+.legalFooterDesc {
+  font-size: 0.875rem;
+  color: var(--sl-fg);
+  margin: 0;
+}
+
+.legalFooterDesc a {
+  color: var(--sl-accent-text);
+  text-decoration: none;
+}
+
+.legalFooterCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--sl-btn-accent);
+  color: var(--sl-btn-accent);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 12px 28px;
+  border-radius: var(--sl-btn-radius);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.legalFooterCta:hover {
+  background: var(--sl-btn-accent-wash);
+  border-color: var(--sl-btn-accent-hover);
+  color: var(--sl-btn-accent-hover);
+  text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* =====================================================================
+   Layout scaffolding — one measure, one section rhythm.
+
+   Sections are separated by a hairline rule rather than whitespace alone,
+   and every heading block is label → title → sub. The old page centred
+   everything; centred text at three different widths is what made it read
+   as a template.
+   ===================================================================== */
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+  width: 100%;
+}
+
+.section {
+  padding: 84px 0;
+  border-top: 1px solid var(--sl-line);
+}
+
+.sectionHead {
+  margin-bottom: 44px;
+}
+
+.secLabel {
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+  margin: 0 0 14px;
+}
+
+.secTitle {
+  font-family: var(--sl-display);
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--sl-white);
+  margin: 0;
+  max-width: 20ch;
+}
+
+.secSub {
+  margin: 16px 0 0;
+  max-width: 62ch;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--sl-dim);
+}
+
+.secSub strong {
+  color: var(--sl-fg);
+  font-weight: 600;
+}
+
+/* ── hero ───────────────────────────────────────────── */
+.hero {
+  /* Vertical only: this element also carries .shell, whose horizontal
+     padding is what lines the hero up with every section below it. A
+     padding shorthand here would silently reset that. */
+  padding-top: 96px;
+  padding-bottom: 24px;
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  /* End, not centre. The left column is much the taller of the two, so
+     centring the art against it leaves the panel floating clear of the bottom
+     — a half-page of nothing between where the art stops and where the demo
+     below begins. Sitting the two columns on the same baseline closes that,
+     and puts the panel's foot on the same line as the call to action. The
+     slack moves up beside the headline, which is large enough to hold it. */
+  align-items: end;
+  gap: 56px;
+}
+
+/* The art only appears once the measure has stopped growing, so it never
+   costs the headline a line of wrap. Below that width it is simply absent
+   rather than shrunk. */
+@media (min-width: 1120px) {
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.heroEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+}
+
+/* Home only. .heroTitle carries the face and colour every page's title
+   shares; the poster-sized setting belongs to this one hero, and leaving it
+   on the shared class was overriding the download page's own sizing. */
+.heroTitleMain {
+  font-size: clamp(40px, 7.2vw, 88px);
+  line-height: 0.94;
+  margin: 0;
+  max-width: 11ch;
+}
+
+.heroLede {
+  margin: 24px 0 0;
+  max-width: 52ch;
+  font-size: 1.06rem;
+  line-height: 1.65;
+  color: var(--sl-dim);
+}
+
+.heroCta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* The badge's clear space: Apple asks for a quarter of the badge's height on
+     every side, which at 44px is 11px, and it is the strictest of the three. */
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* The call to action and the line qualifying it, side by side. The alternative
+   below is wider than the badge, so it cannot share a column with it — that
+   would set the column's width and carry the meta away from the button. */
+.heroCtaRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.heroMeta {
+  font-family: var(--sl-mono);
+  font-size: 0.74rem;
+  color: var(--sl-dim);
+}
+
+/* The single alternative under the hero's call to action: a quiet line
+   carrying the download size and the other way to get it. The size is stated up
+   front on purpose — Studio's installers run past two gigabytes, and a visitor
+   who learns that only once the transfer stalls is a visitor who does not come
+   back to finish it. */
+.heroCtaAlt {
+  margin: 0;
+  font-family: var(--sl-mono);
+  font-size: 0.74rem;
+  color: var(--sl-dim);
+}
+
+.heroArt {
+  display: none;
+  justify-self: end;
+}
+
+/* Declared after the base rule, not folded into the grid media query above:
+   same specificity, so source order is what decides. */
+@media (min-width: 1120px) {
+  .heroArt {
+    display: block;
+  }
+}
+
+/* ── hero art: what the product actually does, drawn as a run.
+   The tree rails are CSS borders, not box-drawing characters: the Google
+   Fonts subset of JetBrains Mono stops short of U+2500, so those glyphs
+   would fall back to another face and break alignment. */
+.artPanel {
+  width: 408px;
+  border: 1px solid var(--sl-line-2);
+  background: var(--sl-ink);
+  font-family: var(--sl-mono);
+  font-size: 0.78rem;
+  box-shadow: 0 0 80px -20px var(--sl-accent-wash);
+}
+
+.artHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--sl-line);
+  color: var(--sl-dim);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.artLive {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--sl-accent);
+}
+
+.artDot {
+  width: 7px;
+  height: 7px;
+  background: var(--sl-accent);
+  animation: artPulse 1.9s ease-in-out infinite;
+}
+
+@keyframes artPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+.artBody {
+  padding: 16px 16px 14px;
+}
+
+.artPrompt {
+  color: var(--sl-white);
+  margin: 0;
+}
+
+.artPrompt span {
+  color: var(--sl-dim);
+  margin-right: 8px;
+}
+
+.artTree {
+  margin: 14px 0 0 10px;
+  border-left: 1px solid var(--sl-line-2);
+}
+
+.artRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0 7px 20px;
+  color: var(--sl-dim);
+}
+
+.artRow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 13px;
+  height: 1px;
+  background: var(--sl-line-2);
+}
+
+.artStage {
+  color: var(--sl-fg);
+  width: 84px;
+  flex: none;
+}
+
+.artModel {
+  color: var(--sl-white);
+}
+
+.artFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--sl-line);
+  color: var(--sl-dim);
+  font-size: 0.7rem;
+}
+
+.artFoot b {
+  color: var(--sl-fg);
+  font-weight: 500;
+}
+
+/* ── the demo, framed as the app it is ──────────────── */
+.term {
+  border: 1px solid var(--sl-line-2);
+  background: var(--sl-ink);
+}
+
+.termBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--sl-line);
+  font-family: var(--sl-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+  line-height: 1;
+}
+
+.termDot {
+  width: 9px;
+  height: 9px;
+  background: var(--sl-line-2);
+  flex: none;
+}
+
+.termTitle {
+  margin-left: 8px;
+}
+
+.termRight {
+  margin-left: auto;
+  color: var(--sl-dim);
+}
+
+/* ── partners ───────────────────────────────────────── */
+.partnerLabel {
+  font-family: var(--sl-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+  margin: 0 0 22px;
+}
+
+.partnerRow {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.partnerRow img {
+  opacity: 0.45;
+  transition: opacity 0.2s;
+}
+
+.partnerRow img:hover {
+  opacity: 0.85;
+}
+
+/* Partner marks are supplied as white-on-transparent art for dark ground;
+   on light ground they need the inversion taken back off. */
+[data-theme='light'] .partnerRow img.flip {
+  filter: grayscale(1);
+}
+
+@media (max-width: 768px) {
+  .whyGrid,
+  .docsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* The ghost index sits behind a headline that wraps much earlier on a
+     phone, so it steps back rather than fighting it. */
+  .whyCard::before {
+    font-size: 1.6rem;
+    top: 28px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .shell,
+  .videoCaption,
+  .videoWrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero {
+    /* The header is absolutely positioned and ~80px tall on mobile, so the
+       top padding must clear it with room to spare. */
+    padding-top: 112px;
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .docsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* The partners strip is the page's sign-off, not another section. Its own
+   top rule sat a few pixels under the last FAQ row's bottom rule and read as
+   a stray line across an empty band, so it goes without one. */
+.sectionFlush {
+  border-top: none;
+  padding-top: 40px;
+}
+
+/* Version and platforms, the line a download page carries under its title. */
+.downloadMeta {
+  margin: 0 0 18px;
+  font-family: var(--sl-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  color: var(--sl-dim);
+}
+
+/* ── Docent: the command line section ───────────────── */
+/* The version sits on the label line, as Studio's does in the hero. */
+.docentLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.docentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.docentText {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+/* The title is the CLI's own block-letter banner, not set type. */
+.docentTitle {
+  margin: 6px 0 4px;
+}
+
+/* The heading lives in the text column here, so it drops the gap a
+   full-width section head keeps under it. */
+.docentText .sectionHead {
+  margin-bottom: 4px;
+}
+
+.docentPoints {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--sl-line);
+}
+
+.docentPoints li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--sl-line);
+  line-height: 1.55;
+}
+
+.docentPoints span {
+  color: var(--sl-white);
+  font-weight: 500;
+}
+
+.docentPoints code {
+  font-family: var(--sl-mono);
+  font-size: 0.85em;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--sl-accent);
+}
+
+/* One recording per site theme. */
+[data-theme='dark'] .docentLight,
+[data-theme='light'] .docentDark {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .docentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Use-case cards reuse the Docent point list; inside a card it needs room
+   above and below so it doesn't crowd the description or the link. */
+.useCasePoints {
+  margin: 22px 0 20px;
+  font-size: 0.88rem;
+  color: var(--sl-dim);
+}
+
+/* A single use case, as one box: the pitch and the ways in on the left, the
+   run on a shaded pane on the right, split by one rule. The points and the
+   panel drop their own borders so the box is the only frame. */
+.useCaseSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  border: 1px solid var(--sl-line-2);
+}
+
+.useCaseText {
+  padding: 40px 40px 36px;
+}
+
+.useCaseSplit .useCasePoints {
+  margin: 22px 0 28px;
+  border-top: none;
+}
+
+.useCaseSplit .useCasePoints li {
+  position: relative;
+  padding: 6px 0 6px 18px;
+  border-bottom: none;
+}
+
+.useCaseSplit .useCasePoints li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.95em;
+  width: 6px;
+  height: 6px;
+  background: var(--sl-accent);
+}
+
+.useCaseActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+}
+
+.useCaseActions .heroCtaAlt {
+  margin: 0;
+}
+
+/* The hero's art panel, flattened into the box's right pane. */
+.artPanel.useCaseArt {
+  width: auto;
+  border: none;
+  border-left: 1px solid var(--sl-line-2);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Head pinned to the top, models and foot to the bottom; the run fills. */
+/* More room than the hero's panel: the run sits in a half-width pane, so the
+   head, run, models and foot share one wider inset. */
+.useCaseArt .artHead,
+.useCaseArt .runModels,
+.useCaseArt .artFoot {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.useCaseArt .artBody {
+  padding: 24px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.runGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1.1fr;
+  margin-top: 16px;
+  border-top: 1px solid var(--sl-line);
+}
+
+.runRow {
+  display: contents;
+}
+
+.runHead,
+.runRow span {
+  padding: 8px 10px 8px 0;
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.runHead {
+  color: var(--sl-dim);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.runRow span {
+  color: var(--sl-fg);
+  font-size: 0.74rem;
+}
+
+.runRow span:first-child {
+  color: var(--sl-dim);
+}
+
+.runRow .runFlag {
+  color: var(--sl-accent);
+}
+
+.runRefs {
+  margin: 14px 0 0;
+  color: var(--sl-dim);
+  font-size: 0.68rem;
+}
+
+.runRefs b {
+  color: var(--sl-fg);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-right: 8px;
+}
+
+.runModels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--sl-line);
+  color: var(--sl-dim);
+  font-size: 0.68rem;
+}
+
+.runModels b {
+  color: var(--sl-accent);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .useCaseSplit {
+    grid-template-columns: 1fr;
+  }
+
+  .useCaseText {
+    padding: 28px 22px;
+  }
+
+  .artPanel.useCaseArt {
+    border-left: none;
+    border-top: 1px solid var(--sl-line-2);
+  }
+
+  .runGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/* The models a use case's starter project is tuned for, by role. */
+.useCaseModels {
+  margin: 0 0 18px;
+  font-family: var(--sl-mono);
+  font-size: 0.74rem;
+  color: var(--sl-dim);
+}
+
+.useCaseModelsHead {
+  margin: 0 0 8px;
+  font-size: 0.66rem;
+}
+
+.useCaseModelsHead span {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.useCaseModels table {
+  display: table;
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border: 1px solid var(--sl-line);
+}
+
+.useCaseModels tr {
+  border: none;
+  background: none;
+}
+
+.useCaseModels th,
+.useCaseModels td {
+  border: none;
+  border-top: 1px solid var(--sl-line);
+  padding: 5px 10px;
+  text-align: left;
+  background: none;
+}
+
+.useCaseModels th {
+  font-weight: normal;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.useCaseModels td + td,
+.useCaseModels th + th {
+  border-left: 1px solid var(--sl-line);
+}
+
+.useCaseModels code {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--sl-accent);
+}
+
+/* The command name inside a section subtitle, set like the Docent points. */
+.secSub code {
+  font-family: var(--sl-mono);
+  font-size: 0.88em;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--sl-accent);
+}
+
+/* =====================================================================
+   Soft surfaces — the home page's look, carried to the pages that share
+   this file (download, pricing, contact/partners, terms, privacy, early
+   access). Same palette; only shape and weight change: rounded cards with
+   soft shadows, pill badges, medium-weight titles, sentence-case buttons.
+   Declared last so it wins over the square rules above at equal
+   specificity.
+   ===================================================================== */
+.page {
+  --r-xl: 28px;
+  --r-lg: 20px;
+  --r-md: 14px;
+  --r-sm: 10px;
+  --shadow-soft: 0 1px 2px rgba(10, 10, 20, 0.04), 0 12px 40px -12px rgba(10, 10, 20, 0.12);
+  --sl-btn-radius: var(--r-sm);
+}
+
+[data-theme='dark'] .page {
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 40px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* The schematic grid gives way to a soft bloom of the brand pink. */
+.page::before {
+  display: none;
+}
+
+.page::after {
+  top: -300px;
+  width: min(1100px, 120vw);
+  height: 640px;
+  border-radius: 50%;
+  background:
+    radial-gradient(40% 55% at 35% 45%, rgba(236, 72, 153, 0.16), transparent 70%),
+    radial-gradient(38% 50% at 65% 40%, rgba(244, 114, 182, 0.12), transparent 70%);
+  filter: blur(30px);
+}
+
+/* Badges become pills. */
+.comingSoonBadge {
+  border-radius: 999px;
+  border-color: var(--sl-line);
+  background: color-mix(in srgb, var(--sl-panel) 70%, transparent);
+  padding: 5px 13px;
+  font-size: 0.64rem;
+}
+
+/* Titles: medium weight, tight tracking, as on the home page. */
+.heroTitle,
+.contactTitle,
+.legalTitle,
+.secTitle {
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.contactTitle {
+  font-size: clamp(2.2rem, 4.4vw, 3.2rem);
+  line-height: 1.04;
+}
+
+.legalTitle {
+  line-height: 1.02;
+}
+
+/* Cards: rounded, softly lifted. */
+.downloadCard,
+.planCard,
+.enterpriseCard,
+.contactCard,
+.legalFooterCard,
+.docCard,
+.faqItem {
+  border-radius: var(--r-lg);
+  border-color: var(--sl-line);
+  box-shadow: var(--shadow-soft);
+}
+
+.downloadCard:hover {
+  border-color: rgba(236, 72, 153, 0.35);
+  transform: translateY(-2px);
+}
+
+.downloadCard {
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.planCardFeatured {
+  border-color: rgba(236, 72, 153, 0.45);
+  box-shadow: var(--shadow-soft), 0 0 60px -10px var(--sl-accent-wash);
+}
+
+.contactCard {
+  padding: 36px;
+}
+
+.legalFooterCard {
+  padding: 32px 36px;
+  background: linear-gradient(140deg, rgba(236, 72, 153, 0.07), rgba(236, 72, 153, 0.015) 50%, rgba(236, 72, 153, 0.05)), var(--sl-panel);
+}
+
+.docsGrid {
+  border: none;
+  gap: 14px;
+}
+
+.docCard {
+  border: 1px solid var(--sl-line);
+}
+
+.faqList {
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faqItem {
+  border: 1px solid var(--sl-line);
+  background: var(--sl-panel);
+  padding: 0 22px;
+}
+
+/* Small surfaces. */
+.legalMetaPill,
+.installBox,
+.downloadInstallBox,
+.richEditor,
+.contactAlert {
+  border-radius: var(--r-sm);
+}
+
+.legalMetaPill {
+  border-radius: 999px;
+}
+
+.contactInput,
+.contactTextarea {
+  border-radius: var(--r-sm);
+  border-color: var(--sl-line);
+  background: var(--sl-ground);
+}
+
+.richEditor {
+  overflow: hidden;
+}
+
+/* Buttons: sentence case, display face, rounded to match the store badges. */
+.primaryBtn,
+.contactSubmit,
+.legalFooterCta,
+.enterpriseCta,
+.planCta,
+.downloadCardAction,
+.studioBtn,
+.secondaryBtn {
+  border-radius: var(--r-sm);
+  font-family: var(--sl-display);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.contactSubmit,
+.primaryBtn {
+  box-shadow: 0 8px 24px -10px rgba(236, 72, 153, 0.7);
+}
+
+/* Legal contents: the active section is a soft pill, not a ruled edge. */
+.legalTocLink {
+  border-left: none;
+  border-radius: 8px;
+}
+
+.legalTocLinkActive {
+  background: var(--sl-accent-wash);
+}
+
+/* The use-case and Docent mocks on any page that still carries them. */
+.artPanel,
+.term,
+.useCaseSplit {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+/* Feature and legal lists: a small check in a pink circle replaces the
+   terminal-style [x]. The [x] text stays in the markup, hidden, so the
+   lists read the same with styles off. */
+.planFeatureCheck {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  border-radius: 50%;
+  background: var(--sl-accent-wash);
+  font-size: 0;
+  color: transparent;
+}
+
+.planFeatureCheck::after,
+.legalProse ul li::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 7px;
+  border: solid var(--sl-accent-text);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+.planFeatureCheck::after {
+  left: 5.5px;
+  top: 3.5px;
+}
+
+.legalProse ul li::before {
+  content: '';
+  top: 0.42em;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--sl-accent-wash);
+}
+
+.legalProse ul li::after {
+  left: 5.5px;
+  top: calc(0.42em + 3.5px);
+}
+
+.legalProse ul li {
+  padding-left: 26px;
+}
+
+[data-theme='light'] .planFeatureCheck,
+.planCardFeatured .planFeatureCheck {
+  color: transparent;
+}
