@@ -2,6 +2,10 @@
 
 Thanks for helping improve smartloop.ai and its docs.
 
+By contributing, you agree that your documentation changes are licensed under
+[CC BY 4.0](LICENSE-docs) and your code changes under the [MIT License](LICENSE),
+the same as the rest of the repo.
+
 ## Small fixes
 
 For a typo, a broken link or a sentence that's out of date, use the **Edit this

@@ -80,3 +80,14 @@ requests are checked by CI first (type check and build).
 
 Issues and pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) covers
 the workflow and the checks a PR has to pass.
+
+## License
+
+- **Documentation** (`docs/`, and the text and images of the site's pages) is
+  licensed under [Creative Commons Attribution 4.0](LICENSE-docs) (CC BY 4.0).
+- **Code** (everything else: components, config, scripts, workflows) is
+  licensed under the [MIT License](LICENSE).
+
+Neither license grants rights to Smartloop's names, logos or other
+trademarks.
+
