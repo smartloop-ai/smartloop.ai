@@ -76,7 +76,7 @@ const config = async (): Promise<Config> => {
   trailingSlash: true,
 
   organizationName: 'smartloop-ai',
-  projectName: 'smartloop',
+  projectName: 'smartloop.ai',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -128,10 +128,8 @@ const config = async (): Promise<Config> => {
         blog: false,
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          // editUrl:
-          //   'https://github.com/smartloop-ai/website/edit/main',
+          // "Edit this page" on every doc, straight into a GitHub edit/PR.
+          editUrl: 'https://github.com/smartloop-ai/smartloop.ai/edit/main/',
           rehypePlugins: [rehypeKatex],
         },
         theme: {
@@ -207,9 +205,11 @@ const config = async (): Promise<Config> => {
       { name: 'twitter:image', content: 'https://smartloop.ai/img/smartloop-social-card.png?v=3' },
     ],
     colorMode: {
+      // Light for everyone on a first visit, whatever the system setting; the
+      // navbar toggle still switches, and the choice is remembered.
       defaultMode: 'light',
       disableSwitch: false,
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
     },
     navbar: {
       logo: {
