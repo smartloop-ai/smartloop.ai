@@ -1,32 +1,82 @@
 # smartloop.ai
 
-The Smartloop website and docs: a static [Docusaurus](https://docusaurus.io/) site
-served from GitHub Pages.
+[![Deploy](https://github.com/smartloop-ai/smartloop.ai/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/smartloop-ai/smartloop.ai/actions/workflows/deploy-pages.yml)
+[![Built with Docusaurus](https://img.shields.io/badge/built%20with-Docusaurus-3ECC5F?logo=docusaurus&logoColor=white)](https://docusaurus.io/)
 
-## Develop
+The website and documentation for [Smartloop Studio](https://smartloop.ai) and
+[Docent](https://github.com/smartloop-ai/docent), the command-line tool. It's a
+static [Docusaurus](https://docusaurus.io/) site served from GitHub Pages at
+**[smartloop.ai](https://smartloop.ai)**.
+
+Found a typo or something out of date? Every docs page has an **Edit this page**
+link at the bottom. See [CONTRIBUTING.md](CONTRIBUTING.md) for anything bigger.
+
+## Quick start
+
+You need Node.js 20 or later.
+
+```sh
+git clone https://github.com/smartloop-ai/smartloop.ai.git
+cd smartloop.ai
+npm ci
+npm start
+```
+
+`npm start` opens a dev server at http://localhost:3000 that reloads as you edit.
+
+| Command | What it does |
+|---|---|
+| `npm start` | Dev server with live reload |
+| `npm run build` | Production build into `build/` (fails on broken links) |
+| `npm run serve` | Serves `build/` the way GitHub Pages will |
+| `npm run typecheck` | TypeScript check |
+| `npm run clear` | Clears Docusaurus caches if a build acts strangely |
+
+## What's where
 
 ```
-npm install
-npm start          # dev server with live reload
-npm run build      # static site in ./build
-npm run serve      # serve ./build
+docs/                 Documentation pages (Markdown/MDX), one file per page
+  templates/          Use-case templates (Legal, ...)
+sidebars.ts           Docs sidebar: the order and grouping of docs pages
+src/pages/            Site pages: home, download, pricing, contact, legal
+src/components/       React components shared by the pages
+src/css/              Global styles and theme variables
+src/utils/api.ts      Calls to the Smartloop API (contact form, downloads)
+static/               Copied as-is to the site root (images, robots.txt, llms.txt)
+starters/             Source for the downloadable sample projects
+docusaurus.config.ts  Site config: navbar, footer, SEO, plugins
 ```
 
-The build fetches the latest Studio release from the Smartloop API and the latest
-Docent version from GitHub, and bakes both into the pages. Set `SLP_API_BASE_URL`
-to point the site at a local API.
+## Writing docs
 
-## How it is hosted
+A docs page is a Markdown file in `docs/`. Its URL comes from the file name:
+`docs/skills.md` is published at `/docs/skills/`.
 
-- **Pages.** Every merge to `main` deploys (`.github/workflows/deploy-pages.yml`).
-  It also runs daily and on a `release-published` repository dispatch, so a new
-  release reaches the download page without a commit. `static/CNAME` holds the
-  custom domain.
-- **API.** The contact form (`POST /v1/contact`) and the tracked, rate-limited
-  installer downloads (`GET /v1/releases/download/{platform}`) are routes on the
-  Smartloop API (`slp-api`, Supabase) at `api.smartloop.ai`. See `src/utils/api.ts`.
-- **Redirects.** Pages can't redirect, so Cloudflare does it in front of the site
-  (`slp-infra-project/cloudflare/website.tf`): `www.` to the apex, the retired
-  `docs.smartloop.ai` host, `/docs/` and `/docs/use-cases/*`, the old
-  `/:platform/release` download links, and `/install*` to the current scripts in
-  the docent repo.
+1. Add `docs/your-page.md` and start it with a `# Title`.
+2. Add its id (`'your-page'`) to `sidebars.ts` where it belongs in the order.
+3. Put screenshots next to the page in `docs/` and reference them relatively:
+   `![Settings](settings.png)`.
+
+Pages support MDX, so React components work too, and math via KaTeX
+(`$E = mc^2$`). The [Docusaurus docs](https://docusaurus.io/docs/markdown-features)
+cover the rest: admonitions (`:::tip`), tabs, code blocks with titles and line
+highlighting.
+
+To improve how a page appears in search results and link previews, give it a
+`description` in front matter:
+
+```md
+---
+description: Pack repeated prompts into skills that analyze documents and search the web.
+---
+```
+
+## Deployment
+
+Merging to `main` publishes the site; there's nothing to deploy by hand. Pull
+requests are checked by CI first (type check and build).
+
+## Contributing
+
+Issues and pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) covers
+the workflow and the checks a PR has to pass.
