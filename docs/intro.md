@@ -8,7 +8,7 @@ Smartloop is a local AI solution to deliver frontier quality using open-source m
 
 At its core, it uses a system-1 (trained in-house) model simulate a control plane, selecting the models needed to answer a given prompt. Instead of relying on a single large model, it uses a capability-based agentic approach that breaks a problem into smaller tasks, delivering comparable results without the infrastructure, cloud, and tokens that much larger models require. Selection weighs each model's capabilities, size, and other factors, while staying within the boundary of your device.
 
-<video src="/img/info-doc-v2.mp4" autoPlay loop muted playsInline style={{width: '100%', borderRadius: '8px'}} />
+<video src="/img/info-doc-v3.mp4" autoPlay loop muted playsInline style={{width: '100%', borderRadius: '8px'}} />
 
 ## What you can do
 

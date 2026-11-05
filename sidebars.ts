@@ -64,7 +64,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Templates',
+      label: 'Use cases',
       collapsed: false,
       items: ['templates/legal'],
     },
