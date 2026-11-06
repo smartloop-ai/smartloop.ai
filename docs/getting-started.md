@@ -123,10 +123,22 @@ None of your content or data is sent, since we use this product ourselves and we
 
 ## Installing on Linux
 
-Smartloop Studio ships through the [Snap Store](https://snapcraft.io/smartloop-studio), which installs the app and keeps it up to date across distributions. If you have `snapd` installed, you can install it from the terminal:
+Smartloop Studio for Linux is a `.deb` package for Debian, Ubuntu, and their derivatives on x86_64. It bundles everything the app needs, including the models and the Vulkan runtime. You only need a working graphics driver.
+
+Download it from the [downloads page](https://smartloop.ai/download/), then install it with `apt`, which also pulls in any system libraries it depends on:
 
 ```bash
-sudo snap install smartloop-studio
+sudo apt install ./studio-*.deb
 ```
 
-Or install it directly from the [Snap Store listing](https://snapcraft.io/smartloop-studio).
+Smartloop Studio then appears in your applications menu.
+
+### Updating
+
+Smartloop Studio does not update itself. When a new version is available, the app tells you. Download the new `.deb` and install it the same way; your projects and settings are kept.
+
+### Uninstalling
+
+```bash
+sudo apt remove smartloop-studio
+```

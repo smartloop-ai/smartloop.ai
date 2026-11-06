@@ -4,16 +4,11 @@ import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import useLatestRelease, { findArtifact, formatSize } from '../hooks/useLatestRelease';
+import useLatestRelease from '../hooks/useLatestRelease';
 import {
   DirectDownloadButton,
-  MacAppStoreBadge,
-  MicrosoftStoreBadge,
-  SnapStoreButton,
-  MAC_APP_STORE_URL,
 } from '../components/StoreBadge';
 import DocentInstall from '../components/DocentInstall';
-import { useInstallerUrl } from '../utils/api';
 import useVisitorPlatform from '../hooks/useVisitorPlatform';
 import styles from './home.module.css';
 
@@ -187,7 +182,7 @@ const legal = {
 };
 
 const steps = [
-  ['Install', 'One installer from your platform’s store. On first launch it checks your memory and GPU and fits the models to them.'],
+  ['Install', 'One installer for your platform, straight from us. On first launch it checks your memory and GPU and fits the models to them.'],
   ['Bring your documents', 'Make a project and drop in your files. They are indexed on your machine. Nothing uploads.'],
   ['Ask', 'The orchestrator splits the request and routes each step to the open model built for it. You never pick one.'],
   ['Take it to the terminal', 'docent runs the same agent, models and projects from your shell, your scripts or over SSH.'],
@@ -225,63 +220,19 @@ const faqs = [
   },
 ];
 
-// The ms-windows-store: deep link launches the Store app directly (the user is
-// already on Windows here); the download page uses the https web link instead.
-const MS_STORE_PROTOCOL = 'ms-windows-store://pdp/?productid=XPDLN9NR8DDLLK';
-
-
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   const studioPlatform = useVisitorPlatform();
   const [work, setWork] = useState(0);
   const { release } = useLatestRelease();
-  const installerUrl = useInstallerUrl();
   // Latest Docent CLI version, baked in at build time (docusaurus.config.ts).
   const docentVersion = siteConfig.customFields?.docentVersion as string | null | undefined;
 
-  // Mac and Windows lead with our own installer, routed through the tracked
-  // redirect on the API: it ships as soon as a release is published and
-  // updates itself. Their store is the line underneath, carrying a campaign
-  // token naming this page so the hand-off stays attributable in the store's
-  // analytics. Linux leads with the Snap Store, with the .deb underneath.
-  const dmg = findArtifact(release, 'darwin', 'dmg');
-  const exe = findArtifact(release, 'win32', 'nsis');
-  const deb = findArtifact(release, 'linux', 'deb');
-
-  const altLine = (href: string, ext: string, size: number) => (
-    <p className={styles.ctaAlt}>
-      or download the{' '}
-      <a className={styles.textLink} href={href} download>.{ext}</a>
-      {' '}· {formatSize(size)}
-    </p>
-  );
-
-  const storeLine = (href: string, preposition: 'on' | 'from', name: string) => (
-    <p className={styles.ctaAlt}>
-      or get it {preposition} the{' '}
-      <a className={styles.textLink} href={href} {...(/^https?:/i.test(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{name}</a>
-    </p>
-  );
-
-  // Mac and Windows fall back to their store badge when the release carries no
-  // installer for the platform.
-  const heroCta: { badge: ReactNode; alt: ReactNode } = (() => {
-    if (studioPlatform === 'macos') {
-      return dmg
-        ? { badge: <DirectDownloadButton platform="macos" />, alt: storeLine(`${MAC_APP_STORE_URL}&ct=web-home`, 'on', 'Mac App Store') }
-        : { badge: <MacAppStoreBadge campaign="web-home" />, alt: null };
-    }
-    if (studioPlatform === 'windows') {
-      // The deep link launches the Store app in place.
-      return exe
-        ? { badge: <DirectDownloadButton platform="windows" />, alt: storeLine(`${MS_STORE_PROTOCOL}&cid=web-home`, 'from', 'Microsoft Store') }
-        : { badge: <MicrosoftStoreBadge href={MS_STORE_PROTOCOL} campaign="web-home" />, alt: null };
-    }
-    if (studioPlatform === 'linux') {
-      return { badge: <SnapStoreButton />, alt: deb ? altLine(installerUrl('linux'), 'deb', deb.size) : null };
-    }
-    return { badge: null, alt: null };
-  })();
+  // One path on every platform: our own installer, routed through the tracked
+  // redirect on the API, which ships as soon as a release is published. No
+  // store links — the redirect resolves the latest build itself, so the button
+  // needs nothing from the release fetch.
+  const heroCta: ReactNode = studioPlatform && studioPlatform !== 'unknown' ? <DirectDownloadButton platform={studioPlatform} /> : null;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -363,11 +314,10 @@ export default function Home(): ReactNode {
               </p>
               <div className={styles.heroCta}>
                 <div className={styles.heroCtaRow}>
-                  {heroCta.badge}
+                  {heroCta}
                   <Link to="/download" className={styles.btnSecondary}>all downloads</Link>
                   <Link to="/contact/" className={styles.btnGhost}>talk to us</Link>
                 </div>
-                {heroCta.alt}
                 <p className={styles.heroMeta}>free · on-device · no account</p>
               </div>
             </div>
