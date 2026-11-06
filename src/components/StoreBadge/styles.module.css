@@ -66,43 +66,19 @@
 }
 
 /*
- * Our own download buttons, in the site's two button styles. The primary is
- * the brand pink, for the one download the visitor most likely wants — the
- * hero's, and the card matching their platform on the download page. The
- * secondary is the plain panel the hero's "all downloads" uses, for the other
- * platforms. Both are built from the theme's own tokens, so they swap with the
- * theme without rules of their own.
+ * Our own download buttons: outlined in the theme's text colour — near black
+ * on the light theme, near white on the dark — on a clear ground. On hover the
+ * outline fills in and the ink turns to the page ground, so the button the
+ * pointer is on is the one that reads solid. No brand colour, no shadow; every
+ * platform gets the same button, so the variant prop no longer changes
+ * anything. Built from the theme's own tokens, so it swaps with the theme
+ * without rules of its own.
  */
 .directCta,
 .directBlock {
-  --dl-plate: var(--sl-accent);
-  --dl-plate-hover: var(--sl-accent-soft);
-  --dl-ink: var(--sl-on-accent);
-  --dl-edge: transparent;
-  --dl-shadow: 0 8px 24px -10px rgba(236, 72, 153, 0.7);
-}
-
-/* On the download page's cards the primary is quieter than the hero's: the
-   panel plate with a pink keyline and a pink mark, rather than a solid pink
-   fill, so three cards in a row don't read as a wall of brand colour. */
-.directBlock:not(.secondary) {
-  --dl-plate: var(--sl-panel);
-  --dl-plate-hover: var(--sl-panel);
+  --dl-plate: transparent;
+  --dl-edge: var(--sl-white);
   --dl-ink: var(--sl-white);
-  --dl-edge: var(--sl-accent);
-  --dl-shadow: 0 1px 2px rgba(10, 10, 20, 0.06), 0 8px 24px -14px rgba(236, 72, 153, 0.45);
-}
-
-.directBlock:not(.secondary) .mark {
-  color: var(--sl-accent);
-}
-
-.secondary {
-  --dl-plate: var(--sl-panel);
-  --dl-plate-hover: var(--sl-panel);
-  --dl-ink: var(--sl-white);
-  --dl-edge: var(--sl-line-2);
-  --dl-shadow: 0 1px 2px rgba(10, 10, 20, 0.06), 0 8px 24px -12px rgba(10, 10, 20, 0.18);
 }
 
 /*
@@ -121,24 +97,64 @@
      with "all downloads" beside it. */
   border-radius: var(--r-sm, 10px);
   color: var(--dl-ink);
-  box-shadow: var(--dl-shadow);
   font-family: var(--sl-display);
   font-weight: 600;
   font-size: 0.92rem;
   white-space: nowrap;
   letter-spacing: -0.01em;
   text-decoration: none;
-  transition: transform 0.18s, background 0.18s, border-color 0.18s;
+  transition: transform 0.18s, background 0.18s, color 0.18s;
 }
 
 .directCta:hover,
 .directCta:focus-visible,
 .directBlock:hover,
 .directBlock:focus-visible {
-  background: var(--dl-plate-hover);
+  --dl-plate: var(--sl-white);
+  --dl-ink: var(--sl-ink);
   color: var(--dl-ink);
   text-decoration: none;
   transform: translateY(-1px);
+}
+
+/* On the download page the outline is the card's own border colour, so the
+   button sits in its card as part of it; it turns solid only on hover. The
+   light value matches the light theme's override of the card border in
+   pages/index.module.css. */
+.directBlock {
+  --dl-edge: var(--sl-line);
+}
+
+[data-theme='light'] .directBlock {
+  --dl-edge: rgba(204, 204, 204, 0.5);
+}
+
+.directBlock:hover,
+.directBlock:focus-visible,
+[data-theme='light'] .directBlock:hover,
+[data-theme='light'] .directBlock:focus-visible {
+  --dl-edge: var(--sl-white);
+}
+
+/* The home page hero's button is the one exception: the solid brand pink, for
+   the single download the visitor most likely wants, so it leads the hero row
+   rather than reading as one more outline beside "all downloads". */
+.directCta,
+.directCta:hover,
+.directCta:focus-visible {
+  --dl-edge: var(--sl-accent);
+  --dl-plate: var(--sl-accent);
+  --dl-ink: var(--sl-on-accent);
+}
+
+.directCta {
+  box-shadow: 0 8px 24px -10px rgba(236, 72, 153, 0.7);
+}
+
+.directCta:hover,
+.directCta:focus-visible {
+  --dl-edge: var(--sl-accent-soft);
+  --dl-plate: var(--sl-accent-soft);
 }
 
 .directCta:focus-visible,
@@ -169,13 +185,7 @@
   border-radius: var(--r-sm, 10px);
   color: var(--dl-ink);
   text-decoration: none;
-  box-shadow: var(--dl-shadow);
-  transition: transform 0.18s, background 0.18s, border-color 0.18s;
-}
-
-.secondary:hover,
-.secondary:focus-visible {
-  border-color: var(--sl-dim);
+  transition: transform 0.18s, background 0.18s, color 0.18s;
 }
 
 .directBlock .mark {

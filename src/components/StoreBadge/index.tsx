@@ -238,8 +238,7 @@ const DIRECT_PLATFORM: Record<
  * dressing it in a store's badge shape would read as an imitation of one — the
  * same plate and mark, promising a listing it does not lead to. So it is the
  * plain black (or, on a dark page, white) plate with the platform mark leading
- * the word: the mark is what says which machine this is for, so the label does
- * not have to repeat it.
+ * the label, which names the platform too.
  *
  * It points at the API's tracked redirect (/v1/releases/download/:platform),
  * which logs the hit and 302s to the artifact — so unlike a store link it is measurable end to end, needs
@@ -271,7 +270,9 @@ export function DirectDownloadButton({
       aria-label={`Download Smartloop Studio for ${name} (${format})`}
     >
       <Mark name={mark} />
-      <span>Download</span>
+      {/* Names the platform, as Cursor's and Claude's hero buttons do: the
+          visitor sees which build they are getting before they click. */}
+      <span>Download for {name}</span>
     </a>
   );
 }
@@ -291,7 +292,8 @@ export function DirectDownloadBlock({
   variant = 'primary',
 }: {
   platform: DirectPlatform;
-  size: string;
+  // Unknown until the release fetch returns; the block reads fine without it.
+  size?: string;
   variant?: ButtonVariant;
 }): ReactNode {
   const { mark, name, platform: releasePlatform, format, covers } = DIRECT_PLATFORM[platform];
@@ -302,13 +304,13 @@ export function DirectDownloadBlock({
       href={path}
       download
       className={variantClass(styles.directBlock, variant)}
-      aria-label={`Download Smartloop Studio for ${name} (${format}, ${size})`}
+      aria-label={`Download Smartloop Studio for ${name} (${size ? `${format}, ${size}` : format})`}
     >
       <Mark name={mark} />
       <span className={styles.directBlockText}>
         <span className={styles.directBlockFormat}>Download</span>
         <span className={styles.directBlockMeta}>
-          {covers} · {size}
+          {size ? `${covers} · ${size}` : covers}
         </span>
       </span>
     </a>

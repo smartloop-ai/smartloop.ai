@@ -10,14 +10,7 @@ import useLatestRelease, {
 } from '../hooks/useLatestRelease';
 import {
   DirectDownloadBlock,
-  SnapStoreBlock,
-  StoreBadgeFor,
-  MAC_APP_STORE_URL,
-  MS_STORE_URL,
-  SNAP_STORE_URL,
 } from '../components/StoreBadge';
-import { useInstallerUrl } from '../utils/api';
-import useVisitorPlatform from '../hooks/useVisitorPlatform';
 import styles from './index.module.css';
 
 function MacIcon() {
@@ -53,31 +46,14 @@ type StudioCard = {
   icon: ReactNode;
   minimum: string[];
   recommended: string[];
-  // Which of the two downloads leads the card.
-  //
-  // Mac and Windows lead with our own installer: it ships the moment a release
-  // is published rather than when store review clears, it updates itself, and
-  // on the Mac it is not sandboxed, so Studio shares ~/.smartloop with the
-  // Docent CLI. Linux leads with the Snap Store, which publishes updates
-  // without a manual review and runs on any distro with snapd, where the .deb
-  // reaches only Debian derivatives.
-  //
-  // The other route stays on every card as the line underneath — the store for
-  // the visitor (or managed machine) that only installs from one, the .deb for
-  // the Linux visitor without snapd.
-  lead: 'direct' | 'store';
-  // The store this card leads with. When the store leads, its own badge says
-  // all of this; these three are for the text link under an installer-led card,
-  // where each store has its own idiom — Apple's is "on the", Microsoft's and
-  // Snapcraft's "from the" — and the href carries this page's campaign token.
-  storeName: string;
-  storePreposition: 'on' | 'from';
-  storeHref: string;
+  // Every card offers our own installer and nothing else — no store links: it
+  // ships the moment a release is published rather than when store review
+  // clears, and on the Mac it is not sandboxed, so Studio shares ~/.smartloop
+  // with the Docent CLI.
   // Installer kinds only — the macOS zip and Linux AppImage are auto-update
   // payloads and must never be offered as a download link.
   platform: ArtifactPlatform;
   kind: ArtifactKind;
-  format: string;
 };
 
 const studioCards: StudioCard[] = [
@@ -93,13 +69,8 @@ const studioCards: StudioCard[] = [
       '10 GB free disk space',
     ],
     recommended: ['More unified memory is better — 24 GB or above'],
-    lead: 'direct',
-    storeName: 'Mac App Store',
-    storePreposition: 'on',
-    storeHref: `${MAC_APP_STORE_URL}&ct=web-download`,
     platform: 'darwin',
     kind: 'dmg',
-    format: '.dmg',
   },
   {
     key: 'windows',
@@ -113,13 +84,8 @@ const studioCards: StudioCard[] = [
       '10 GB free disk space',
     ],
     recommended: ['More system RAM is better — 24 GB or above', 'A discrete NVIDIA GPU (RTX 40-series or newer, 8 GB+ VRAM)'],
-    lead: 'direct',
-    storeName: 'Microsoft Store',
-    storePreposition: 'from',
-    storeHref: `${MS_STORE_URL}?cid=web-download`,
     platform: 'win32',
     kind: 'nsis',
-    format: '.exe',
   },
   {
     key: 'linux',
@@ -127,36 +93,27 @@ const studioCards: StudioCard[] = [
     meta: 'Linux · x86_64',
     icon: <LinuxIcon />,
     minimum: [
-      'Linux x86_64 — snapd for the snap, Debian or Ubuntu for the .deb',
+      'Linux x86_64 — Debian, Ubuntu, or a derivative',
       'Vulkan-capable GPU — NVIDIA, AMD, or Intel, including integrated graphics',
       '16 GB system RAM',
       '10 GB free disk space',
     ],
     recommended: ['More system RAM is better — 24 GB or above', 'A discrete NVIDIA GPU (RTX 40-series or newer, 8 GB+ VRAM)'],
-    lead: 'store',
-    storeName: 'Snap Store',
-    storePreposition: 'from',
-    storeHref: SNAP_STORE_URL,
     platform: 'linux',
     kind: 'deb',
-    format: '.deb',
   },
 ];
 
 export default function Download(): ReactNode {
   const { status, release } = useLatestRelease();
-  const installerUrl = useInstallerUrl();
-  // The visitor's own platform gets the pink primary button; the other two
-  // cards, and every card until the platform is known, get the plain one.
-  const visitorPlatform = useVisitorPlatform();
 
   return (
     <div id="app" className="body">
       <Head>
         <title>Downloads | Smartloop</title>
-        <meta name="description" content="Download Smartloop Studio for Mac (.dmg), Windows (.exe), or Linux (Snap Store or .deb) — also on the Mac App Store and Microsoft Store. See system requirements for macOS, Windows, and Linux." />
+        <meta name="description" content="Download Smartloop Studio for Mac (.dmg), Windows (.exe), or Linux (.deb). See system requirements for macOS, Windows, and Linux." />
         <meta property="og:title" content="Downloads | Smartloop" />
-        <meta property="og:description" content="Download Smartloop Studio for Mac (.dmg), Windows (.exe), or Linux (Snap Store or .deb) — also on the Mac App Store and Microsoft Store. See system requirements for macOS, Windows, and Linux." />
+        <meta property="og:description" content="Download Smartloop Studio for Mac (.dmg), Windows (.exe), or Linux (.deb). See system requirements for macOS, Windows, and Linux." />
         <link rel="canonical" href="https://smartloop.ai/download/" />
       </Head>
       <div className="wrapper">
@@ -168,7 +125,7 @@ export default function Download(): ReactNode {
               Smartloop <span className={styles.studioAccent}>Studio</span>
             </h1>
             {/* The version and platform line every download page carries, right
-                under the title. The stores always serve the current build, so a
+                under the title. The download always serves the current build, so a
                 release the API did not return just drops the version. */}
             <p className={styles.downloadMeta}>
               {status === 'ready' ? `v${release.version} · ` : ''}macOS · Windows · Linux
@@ -182,11 +139,10 @@ export default function Download(): ReactNode {
           <section className="px-6 pt-4 pb-10 max-w-5xl mx-auto w-full">
             <div className={styles.downloadGrid}>
               {studioCards.map((card) => {
-                // The direct installer is only offered when the latest release
-                // actually carries that artifact; otherwise the card falls back
-                // to the store badge alone.
                 const artifact = findArtifact(release, card.platform, card.kind);
-                const variant = visitorPlatform === card.key ? 'primary' : 'secondary';
+                // Every card gets the plain button; hover is what highlights
+                // one, so the visitor's own platform is not singled out.
+                const variant = 'secondary';
 
                 return (
                   // The badge and the direct link each carry their own click, so
@@ -212,56 +168,14 @@ export default function Download(): ReactNode {
                       ))}
                     </ul>
                     <div className={styles.downloadCardFoot}>
-                      {/* A card set to lead with the installer draws our block
-                          and names the store on the line underneath; a
-                          store-led card draws the store's badge and offers the
-                          installer underneath (Linux draws the Snap Store as our
-                          own block, to match). Either way the card falls back
-                          to the badge alone when the release carries no
-                          installer for this platform. */}
-                      {card.lead === 'direct' && artifact ? (
-                        <>
-                          <DirectDownloadBlock
-                            platform={card.key}
-                            size={formatSize(artifact.size)}
-                            variant={variant}
-                          />
-                          <p className={styles.downloadAltLine}>
-                            or get it {card.storePreposition} the{' '}
-                            <a
-                              className={styles.downloadAltLink}
-                              href={card.storeHref}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {card.storeName}
-                            </a>
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          {card.key === 'linux' ? (
-                            <SnapStoreBlock variant={variant} />
-                          ) : (
-                            <StoreBadgeFor platform={card.key} campaign="web-download" />
-                          )}
-                          {artifact && (
-                            <p className={styles.downloadAltLine}>
-                              or download the{' '}
-                              <a
-                                // Route through the API's tracked redirect,
-                                // which logs the hit then 302s to the artifact.
-                                className={styles.downloadAltLink}
-                                href={installerUrl(card.platform)}
-                                download
-                              >
-                                {card.format}
-                              </a>{' '}
-                              · {formatSize(artifact.size)}
-                            </p>
-                          )}
-                        </>
-                      )}
+                      {/* The block links to the API's tracked redirect,
+                          which resolves the latest build itself; the release
+                          fetch only adds the size. */}
+                      <DirectDownloadBlock
+                        platform={card.key}
+                        size={artifact ? formatSize(artifact.size) : undefined}
+                        variant={variant}
+                      />
                     </div>
                   </div>
                 );
