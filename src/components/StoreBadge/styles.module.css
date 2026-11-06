@@ -117,6 +117,25 @@
   transform: translateY(-1px);
 }
 
+/* On the download page the outline is the card's own border colour, so the
+   button sits in its card as part of it; it turns solid only on hover. The
+   light value matches the light theme's override of the card border in
+   pages/index.module.css. */
+.directBlock {
+  --dl-edge: var(--sl-line);
+}
+
+[data-theme='light'] .directBlock {
+  --dl-edge: rgba(204, 204, 204, 0.5);
+}
+
+.directBlock:hover,
+.directBlock:focus-visible,
+[data-theme='light'] .directBlock:hover,
+[data-theme='light'] .directBlock:focus-visible {
+  --dl-edge: var(--sl-white);
+}
+
 /* The home page hero's button is the one exception: the solid brand pink, for
    the single download the visitor most likely wants, so it leads the hero row
    rather than reading as one more outline beside "all downloads". */
