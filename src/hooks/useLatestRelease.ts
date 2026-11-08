@@ -59,17 +59,22 @@ export default function useLatestRelease(): LatestRelease {
     : { status: 'unavailable', release: null };
 }
 
-/** First artifact matching a platform/kind pair, or null. */
+/**
+ * The artifact for a platform/kind pair, or null. With `arch`, only that
+ * build; without it, x64 leads where there is one, as the API's download
+ * redirect does.
+ */
 export function findArtifact(
   release: Release | null,
   platform: ArtifactPlatform,
   kind: ArtifactKind,
+  arch?: ArtifactArch,
 ): ReleaseArtifact | null {
   if (!release) return null;
-  return (
-    release.artifacts.find((a) => a.platform === platform && a.kind === kind) ??
-    null
+  const matches = release.artifacts.filter(
+    (a) => a.platform === platform && a.kind === kind && (!arch || a.arch === arch),
   );
+  return matches.find((a) => a.arch === 'x64') ?? matches[0] ?? null;
 }
 
 /**
