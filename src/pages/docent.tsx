@@ -245,7 +245,7 @@ export default function Docent(): ReactNode {
               <ol className={local.loop}>
                 {loop.map(([title, desc], i) => (
                   <li key={title}>
-                    <span className={styles.stepNum}>{String(i + 1).padStart(2, '0')}</span>
+                    <span className={local.loopNum}>{String(i + 1).padStart(2, '0')}</span>
                     <h3 className={styles.stepTitle}>{title}</h3>
                     <p className={styles.stepDesc}>{desc}</p>
                   </li>

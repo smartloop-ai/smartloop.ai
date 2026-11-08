@@ -37,18 +37,33 @@
   }
 }
 
-/* ── how it works: five stages, readable at any width ── */
+/* ── how it works: five stages as rows, title left and detail right,
+      so each has room to read (five columns were cramped). ── */
 .loop {
   list-style: none;
-  margin: 40px 0 0;
+  margin: 36px 0 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 28px;
+  border-top: 1px solid var(--sl-line);
 }
 
-.loop h3 {
-  margin-top: 14px;
+.loop li {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 24px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.loopNum {
+  font-family: var(--sl-mono);
+  font-size: 0.72rem;
+  color: var(--sl-accent-text);
+}
+
+.loop h3,
+.loop p {
+  margin: 0;
 }
 
 /* ── languages table ── */
@@ -118,6 +133,15 @@
 }
 
 @media (max-width: 640px) {
+  .loop li {
+    grid-template-columns: 36px minmax(0, 1fr);
+    row-gap: 8px;
+  }
+
+  .loop li p {
+    grid-column: 2;
+  }
+
   .tableHead,
   .tableRow {
     grid-template-columns: 1fr;
