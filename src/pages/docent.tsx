@@ -4,7 +4,7 @@ import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import DocentInstall from '../components/DocentInstall';
+import DocentInstall, { installCommands, useInstallShell } from '../components/DocentInstall';
 import styles from './home.module.css';
 import local from './docent.module.css';
 
@@ -26,8 +26,8 @@ const points: [string, string][] = [
 const steps: { title: string; code: string; desc: string }[] = [
   {
     title: 'Install',
-    code: 'curl -fsSL https://smartloop.ai/install | sh',
-    desc: 'One line puts docent on your PATH. On Windows, use the PowerShell line above.',
+    code: installCommands.unix, // swapped for the visitor's shell below
+    desc: 'One line puts docent on your PATH. macOS, Linux and Windows.',
   },
   {
     title: 'Open a project',
@@ -51,6 +51,7 @@ function Check(): ReactNode {
 
 export default function Docent(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
+  const shell = useInstallShell();
   // Latest Docent CLI version, baked in at build time (docusaurus.config.ts).
   const docentVersion = siteConfig.customFields?.docentVersion as string | null | undefined;
 
@@ -156,7 +157,7 @@ export default function Docent(): ReactNode {
                   <li key={title}>
                     <span className={styles.stepNum}>{String(i + 1).padStart(2, '0')}</span>
                     <p className={styles.stepTitle}>{title}</p>
-                    <code className={local.stepCode}>{code}</code>
+                    <code className={local.stepCode}>{i === 0 ? installCommands[shell] : code}</code>
                     <p className={styles.stepDesc}>{desc}</p>
                   </li>
                 ))}

@@ -1,5 +1,5 @@
-/* The Docent install one-liner: a segmented shell switch over one command
-   bar, with an icon-only copy button so the command is what reads first.
+/* The Docent install one-liner for the visitor's platform: one command bar
+   with an icon-only copy button, so the command is what reads first.
    Left-aligned by default (it sits in a text column on the homepage);
    the hero variant centres it. */
 .install {
@@ -16,38 +16,6 @@
 .hero {
   max-width: 600px;
   align-items: center;
-}
-
-.installTabs {
-  display: flex;
-  gap: 2px;
-  padding: 3px;
-  border-radius: 10px;
-  background: var(--sl-ground);
-  border: 1px solid var(--sl-line);
-}
-
-.installTab {
-  background: none;
-  border: none;
-  border-radius: 7px;
-  padding: 5px 12px;
-  font-family: var(--sl-display);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--sl-dim);
-  cursor: pointer;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-}
-
-.installTab:hover {
-  color: var(--sl-white);
-}
-
-.installTabActive {
-  color: var(--sl-white);
-  background: var(--sl-panel);
-  box-shadow: 0 1px 2px rgba(10, 10, 20, 0.08);
 }
 
 .installRow {
