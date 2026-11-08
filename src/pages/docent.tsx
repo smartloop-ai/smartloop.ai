@@ -102,11 +102,13 @@ export default function Docent(): ReactNode {
               <p className={styles.heroLede}>{DESCRIPTION}</p>
               <div className={styles.heroCta}>
                 <DocentInstall location="docent_page" variant="hero" />
-                <div className={styles.heroCtaRow}>
-                  <Link to="https://github.com/smartloop-ai/docent" className={styles.btnSecondary}>GitHub</Link>
-                  <Link to="/docs/command-line-tool" className={styles.btnGhost}>full reference</Link>
-                </div>
                 <p className={styles.heroMeta}>free · macOS, Linux, Windows · no account</p>
+                {/* Secondary on purpose: the install line is the call to action. */}
+                <p className={styles.ctaAlt}>
+                  source on <Link to="https://github.com/smartloop-ai/docent" className={styles.textLink}>GitHub</Link>
+                  {' · '}
+                  <Link to="/docs/command-line-tool" className={styles.textLink}>full reference</Link>
+                </p>
               </div>
             </div>
           </section>
