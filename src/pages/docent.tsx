@@ -148,8 +148,9 @@ export default function Docent(): ReactNode {
               </ol>
             </div>
           </section>
+
+          <Footer />
         </main>
-        <Footer />
       </div>
     </div>
   );
