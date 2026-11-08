@@ -12,7 +12,7 @@ const installCommands: Record<Shell, string> = {
 };
 
 function CopyIcon({ done }: { done: boolean }): ReactNode {
-  const props = { width: 15, height: 15, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
+  const props = { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
   return done
     ? <svg {...props}><polyline points="20 6 9 17 4 12" /></svg>
     : <svg {...props}><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>;
@@ -25,8 +25,12 @@ export default function DocentInstall({ location = 'home', variant = 'card' }: {
   const [copied, setCopied] = useState(false);
 
   // Windows visitors land on the PowerShell line; everyone else gets curl.
+  // Client Hints first (Chromium), then the legacy fields; macOS and Linux
+  // share the curl line, so only Windows needs spotting.
   useEffect(() => {
-    if (/win/i.test(navigator.platform) || /windows/i.test(navigator.userAgent)) setShell('windows');
+    const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
+    const platform = nav.userAgentData?.platform || nav.platform || '';
+    if (/^win/i.test(platform) || /windows/i.test(nav.userAgent)) setShell('windows');
   }, []);
 
   const copy = async () => {
@@ -58,9 +62,14 @@ export default function DocentInstall({ location = 'home', variant = 'card' }: {
       </div>
       <div className={styles.installRow}>
         <code><span>{shell === 'windows' ? '>' : '$'}</span>{installCommands[shell]}</code>
-        <button type="button" className={styles.copy} onClick={copy} aria-label="Copy the install command">
-          {variant === 'hero' && <CopyIcon done={copied} />}
-          {copied ? 'copied' : 'copy'}
+        <button
+          type="button"
+          className={styles.copy}
+          onClick={copy}
+          aria-label={copied ? 'Copied' : 'Copy the install command'}
+          title={copied ? 'Copied' : 'Copy'}
+        >
+          {variant === 'hero' ? <CopyIcon done={copied} /> : copied ? 'copied' : 'copy'}
         </button>
       </div>
     </div>
