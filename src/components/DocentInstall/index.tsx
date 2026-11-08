@@ -19,7 +19,7 @@ function CopyIcon({ done }: { done: boolean }): ReactNode {
 }
 
 // `location` tags the copy event in analytics (homepage vs /docent).
-// `variant="hero"` is the centered, frameless version for a page's hero.
+// `variant="hero"` centres it for a page's hero.
 export default function DocentInstall({ location = 'home', variant = 'card' }: { location?: string; variant?: 'card' | 'hero' }): ReactNode {
   const [shell, setShell] = useState<Shell>('unix');
   const [copied, setCopied] = useState(false);
@@ -69,7 +69,7 @@ export default function DocentInstall({ location = 'home', variant = 'card' }: {
           aria-label={copied ? 'Copied' : 'Copy the install command'}
           title={copied ? 'Copied' : 'Copy'}
         >
-          {variant === 'hero' ? <CopyIcon done={copied} /> : copied ? 'copied' : 'copy'}
+          <CopyIcon done={copied} />
         </button>
       </div>
     </div>

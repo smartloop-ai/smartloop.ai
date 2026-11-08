@@ -22,10 +22,23 @@ const points: [string, string][] = [
   ['Open models.', 'No vendor lock-in: pick the model, and run it locally so your code stays private.'],
 ];
 
-const steps: [string, string][] = [
-  ['Install', 'Run the one-liner above. It puts docent on your PATH.'],
-  ['Open a project', 'cd into a repo and run docent. It downloads the models it needs the first time.'],
-  ['Ask for a change', 'Describe what you want. docent writes it, builds it and fixes what breaks.'],
+// What you type at each step, then what docent does with it.
+const steps: { title: string; code: string; desc: string }[] = [
+  {
+    title: 'Install',
+    code: 'curl -fsSL https://smartloop.ai/install | sh',
+    desc: 'One line puts docent on your PATH. On Windows, use the PowerShell line above.',
+  },
+  {
+    title: 'Open a project',
+    code: 'cd my-app && docent',
+    desc: 'The first run fetches what it needs. Type /models to pick an open model, like MiniMax M3.',
+  },
+  {
+    title: 'Ask for a change',
+    code: '> add a CLI that asks for a name and greets it',
+    desc: 'docent writes the diff, builds it, fixes what breaks, and asks before it runs anything.',
+  },
 ];
 
 function Check(): ReactNode {
@@ -136,12 +149,14 @@ export default function Docent(): ReactNode {
           <section className={styles.shell}>
             <div className={`${styles.section} ${local.lastSection}`}>
               <p className={styles.kicker}>Get started</p>
-              <h2 className={styles.h2}>Three steps, then you're coding.</h2>
+              <h2 className={styles.h2}>From install to a passing build.</h2>
+              <p className={styles.sub}>Three things to type. docent does the rest.</p>
               <ol className={`${styles.steps} ${local.steps}`}>
-                {steps.map(([title, desc], i) => (
+                {steps.map(({ title, code, desc }, i) => (
                   <li key={title}>
                     <span className={styles.stepNum}>{String(i + 1).padStart(2, '0')}</span>
                     <p className={styles.stepTitle}>{title}</p>
+                    <code className={local.stepCode}>{code}</code>
                     <p className={styles.stepDesc}>{desc}</p>
                   </li>
                 ))}

@@ -1,29 +1,26 @@
-/* The Docent install one-liner, with a tab per shell and a copy button.
-   Drawn as one of the site's soft cards: rounded, lightly lifted, with the
-   shell choice as a segmented pill rather than a ruled tab strip. */
+/* The Docent install one-liner: a segmented shell switch over one command
+   bar, with an icon-only copy button so the command is what reads first.
+   Left-aligned by default (it sits in a text column on the homepage);
+   the hero variant centres it. */
 .install {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
   width: 100%;
-  max-width: 520px;
+  max-width: 560px;
   min-width: 0;
   box-sizing: border-box;
-  border: 1px solid var(--sl-line);
-  border-radius: 14px;
-  background: var(--sl-panel);
-  box-shadow: 0 1px 2px rgba(10, 10, 20, 0.04), 0 12px 40px -12px rgba(10, 10, 20, 0.12);
-  overflow: hidden;
 }
 
-[data-theme='dark'] .install {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 40px -12px rgba(0, 0, 0, 0.6);
+.hero {
+  max-width: 600px;
+  align-items: center;
 }
 
 .installTabs {
   display: flex;
-  align-self: flex-start;
   gap: 2px;
-  margin: 10px 10px 0;
   padding: 3px;
   border-radius: 10px;
   background: var(--sl-ground);
@@ -56,13 +53,18 @@
 .installRow {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 10px;
-  padding: 8px 8px 8px 14px;
+  align-self: stretch;
+  gap: 14px;
   min-width: 0;
-  border-radius: 10px;
-  background: var(--sl-ground);
+  padding: 10px 10px 10px 20px;
+  border-radius: 14px;
   border: 1px solid var(--sl-line);
+  background: var(--sl-panel);
+  box-shadow: 0 1px 2px rgba(10, 10, 20, 0.04), 0 12px 40px -12px rgba(10, 10, 20, 0.12);
+}
+
+[data-theme='dark'] .installRow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 40px -12px rgba(0, 0, 0, 0.6);
 }
 
 .installRow code {
@@ -70,12 +72,18 @@
   min-width: 0;
   overflow-x: auto;
   white-space: nowrap;
+  scrollbar-width: none;
   background: none;
   border: none;
   padding: 0;
+  text-align: left;
   font-family: var(--sl-mono);
-  font-size: 0.8rem;
+  font-size: 0.88rem;
   color: var(--sl-white);
+}
+
+.hero .installRow code {
+  font-size: 0.92rem;
 }
 
 .installRow code span {
@@ -86,84 +94,27 @@
 
 .copy {
   flex: none;
-  background: var(--sl-accent);
-  color: var(--sl-on-accent);
-  border: none;
-  border-radius: 8px;
-  padding: 7px 14px;
-  font-family: var(--sl-display);
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 6px 18px -8px rgba(236, 72, 153, 0.7);
-  transition: background 0.18s;
-}
-
-.copy:hover {
-  background: var(--sl-accent-soft);
-}
-
-/* ── hero variant: no outer card, tabs centred over one wide command bar,
-      and a quiet copy button so the command is what you see first. ── */
-.hero {
-  max-width: 600px;
-  align-items: center;
-  gap: 12px;
-  border: none;
-  background: none;
-  box-shadow: none;
-  overflow: visible;
-}
-
-[data-theme='dark'] .hero {
-  box-shadow: none;
-}
-
-.hero .installTabs {
-  align-self: center;
-  margin: 0;
-}
-
-.hero .installRow {
-  align-self: stretch;
-  margin: 0;
-  gap: 14px;
-  padding: 10px 10px 10px 20px;
-  border-radius: 14px;
-  background: var(--sl-panel);
-  box-shadow: 0 1px 2px rgba(10, 10, 20, 0.04), 0 12px 40px -12px rgba(10, 10, 20, 0.12);
-}
-
-[data-theme='dark'] .hero .installRow {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 40px -12px rgba(0, 0, 0, 0.6);
-}
-
-.hero .installRow code {
-  font-size: 0.92rem;
-  text-align: left;
-  scrollbar-width: none;
-}
-
-.hero .copy {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
   padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--sl-line);
   background: var(--sl-ground);
   color: var(--sl-dim);
-  border: 1px solid var(--sl-line);
-  box-shadow: none;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
 }
 
-.hero .copy:hover {
-  background: var(--sl-ground);
+.copy:hover {
   border-color: var(--sl-accent);
   color: var(--sl-accent-text);
 }
 
 @media (max-width: 640px) {
+  .installRow code,
   .hero .installRow code {
     font-size: 0.78rem;
   }

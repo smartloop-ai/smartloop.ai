@@ -5,6 +5,22 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+/* The thing you type at each step: one line, scrolls rather than wraps. */
+.stepCode {
+  display: block;
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  border: 1px solid var(--sl-line);
+  border-radius: 10px;
+  background: var(--sl-panel);
+  font-family: var(--sl-mono);
+  font-size: 0.76rem;
+  color: var(--sl-white);
+}
+
 /* The page ends here, so leave room above the footer. */
 .lastSection {
   padding-bottom: 112px;

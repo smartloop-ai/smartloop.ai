@@ -7,6 +7,7 @@ export default function Footer() {
             <span>Made in San Francisco, CA</span>
             <div className="sl-footer__links">
                 <Link to="/docs/getting-started">Docs</Link>
+                <Link to="/contact/?for=partner">Partners</Link>
                 <Link to="/terms">Terms</Link>
                 <Link to="/privacy">Privacy</Link>
                 <Link
