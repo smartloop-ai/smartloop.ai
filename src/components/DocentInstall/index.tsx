@@ -11,7 +11,8 @@ const installCommands: Record<Shell, string> = {
   windows: 'irm https://smartloop.ai/install.ps1 | iex',
 };
 
-export default function DocentInstall(): ReactNode {
+// `location` tags the copy event in analytics (homepage vs /docent).
+export default function DocentInstall({ location = 'home' }: { location?: string }): ReactNode {
   const [shell, setShell] = useState<Shell>('unix');
   const [copied, setCopied] = useState(false);
 
@@ -24,6 +25,7 @@ export default function DocentInstall(): ReactNode {
     try {
       await navigator.clipboard.writeText(installCommands[shell]);
       setCopied(true);
+      (window as { gtag?: (...args: unknown[]) => void }).gtag?.('event', 'docent_install_copy', { platform: shell, location });
       setTimeout(() => setCopied(false), 1500);
     } catch {
       /* clipboard blocked: the command is still selectable */
