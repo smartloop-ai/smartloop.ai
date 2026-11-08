@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import Head from '@docusaurus/Head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -7,6 +7,7 @@ import useLatestRelease, {
   formatSize,
   type ArtifactKind,
   type ArtifactPlatform,
+  type Release,
 } from '../hooks/useLatestRelease';
 import {
   DirectDownloadBlock,
@@ -54,6 +55,8 @@ type StudioCard = {
   // payloads and must never be offered as a download link.
   platform: ArtifactPlatform;
   kind: ArtifactKind;
+  // One download per architecture where the platform ships more than one.
+  arches?: ('x64' | 'arm64')[];
 };
 
 const studioCards: StudioCard[] = [
@@ -90,10 +93,10 @@ const studioCards: StudioCard[] = [
   {
     key: 'linux',
     title: 'Linux',
-    meta: 'Linux · x86_64',
+    meta: 'Linux · x86_64 · ARM64',
     icon: <LinuxIcon />,
     minimum: [
-      'Linux x86_64 — Debian, Ubuntu, or a derivative',
+      'Linux x86_64 or ARM64 — Debian, Ubuntu, or a derivative',
       'Vulkan-capable GPU — NVIDIA, AMD, or Intel, including integrated graphics',
       '16 GB system RAM',
       '10 GB free disk space',
@@ -101,8 +104,129 @@ const studioCards: StudioCard[] = [
     recommended: ['More system RAM is better — 24 GB or above', 'A discrete NVIDIA GPU (RTX 40-series or newer, 8 GB+ VRAM)'],
     platform: 'linux',
     kind: 'deb',
+    arches: ['x64', 'arm64'],
   },
 ];
+
+type Arch = 'x64' | 'arm64';
+
+const ARCH_NAME: Record<Arch, string> = { x64: 'x86_64', arm64: 'ARM64' };
+
+/**
+ * The machine's architecture, where the browser says. Chromium reports it
+ * through User-Agent Client Hints; other browsers sometimes name it in the
+ * user agent (aarch64 / arm64 on Linux). Null off Linux, or when there is no
+ * telling, and the switch stays on x86_64.
+ */
+async function detectArch(): Promise<Arch | null> {
+  const nav = navigator as Navigator & {
+    userAgentData?: {
+      platform?: string;
+      getHighEntropyValues(hints: string[]): Promise<{ architecture?: string }>;
+    };
+  };
+  // Only a Linux machine's own architecture says which Linux build it wants;
+  // on a Mac or PC the download is for some other box, so leave the default.
+  const platform = nav.userAgentData?.platform ?? navigator.userAgent;
+  if (!/linux/i.test(platform) || /android/i.test(navigator.userAgent)) return null;
+  try {
+    const hints = await nav.userAgentData?.getHighEntropyValues(['architecture']);
+    if (hints?.architecture === 'arm') return 'arm64';
+    if (hints?.architecture === 'x86') return 'x64';
+  } catch {
+    // Hints refused; fall back to the user agent.
+  }
+  if (/aarch64|arm64|armv8/i.test(navigator.userAgent)) return 'arm64';
+  if (/x86_64|amd64|x64/i.test(navigator.userAgent)) return 'x64';
+  return null;
+}
+
+/**
+ * The build a multi-architecture card offers. It starts on the visitor's own
+ * architecture when the browser reports it, so most people never touch the
+ * switch.
+ */
+function useArch(arches: Arch[] | undefined): [Arch | undefined, (a: Arch) => void] {
+  const [arch, setArch] = useState<Arch | undefined>(arches?.[0]);
+
+  useEffect(() => {
+    if (!arches) return;
+    let live = true;
+    detectArch().then((found) => {
+      if (live && found && arches.includes(found)) setArch(found);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  return [arch, setArch];
+}
+
+/**
+ * A platform's card. Where the platform ships more than one architecture, the
+ * switch takes the place of the line under its name, and the one button at
+ * the foot downloads whichever build is picked.
+ */
+function DownloadCard({ card, release }: { card: StudioCard; release: Release | null }): ReactNode {
+  const [arch, setArch] = useArch(card.arches);
+  const artifact = findArtifact(release, card.platform, card.kind, arch);
+
+  return (
+    // The download link carries its own click, so the card itself is a plain
+    // container rather than one big link, and does not light up on hover.
+    <div className={styles.downloadCard}>
+      <div className={styles.downloadCardHeader}>
+        <div className={styles.downloadCardIcon}>{card.icon}</div>
+        <div className={styles.downloadCardHeaderText}>
+          <p className={styles.downloadCardTitle}>{card.title}</p>
+          {card.arches && arch ? (
+            <div className={`${styles.downloadOsTabs} ${styles.archSwitch}`} role="radiogroup" aria-label="Architecture">
+              {card.arches.map((a) => (
+                <button
+                  key={a}
+                  type="button"
+                  role="radio"
+                  aria-checked={a === arch}
+                  className={`${styles.downloadOsTab} ${a === arch ? styles.downloadOsTabActive : ''}`}
+                  onClick={() => setArch(a)}
+                >
+                  {ARCH_NAME[a]}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <p className={styles.downloadCardMeta}>{card.meta}</p>
+          )}
+        </div>
+      </div>
+      <p className={styles.downloadReqLabel}>Minimum</p>
+      <ul className={styles.downloadReqList}>
+        {card.minimum.map((req, i) => (
+          <li key={i}>{req}</li>
+        ))}
+      </ul>
+      <p className={styles.downloadRecLabel}>Recommended</p>
+      <ul className={styles.downloadRecList}>
+        {card.recommended.map((req, i) => (
+          <li key={i}>{req}</li>
+        ))}
+      </ul>
+      <div className={styles.downloadCardFoot}>
+        {/* The block links to the API's tracked redirect, which resolves the
+            latest build itself; the release fetch only adds the size. Every
+            card gets the same plain button, so the visitor's own platform is
+            not singled out. */}
+        <DirectDownloadBlock
+          platform={card.key}
+          arch={arch}
+          size={artifact ? formatSize(artifact.size) : undefined}
+          variant="secondary"
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function Download(): ReactNode {
   const { status, release } = useLatestRelease();
@@ -138,48 +262,9 @@ export default function Download(): ReactNode {
           {/* Studio downloads */}
           <section className="px-6 pt-4 pb-10 max-w-5xl mx-auto w-full">
             <div className={styles.downloadGrid}>
-              {studioCards.map((card) => {
-                const artifact = findArtifact(release, card.platform, card.kind);
-                // Every card gets the plain button; hover is what highlights
-                // one, so the visitor's own platform is not singled out.
-                const variant = 'secondary';
-
-                return (
-                  // The badge and the direct link each carry their own click, so
-                  // the card itself is a plain container rather than one big link.
-                  <div key={card.key} className={styles.downloadCard}>
-                    <div className={styles.downloadCardHeader}>
-                      <div className={styles.downloadCardIcon}>{card.icon}</div>
-                      <div className={styles.downloadCardHeaderText}>
-                        <p className={styles.downloadCardTitle}>{card.title}</p>
-                        <p className={styles.downloadCardMeta}>{card.meta}</p>
-                      </div>
-                    </div>
-                    <p className={styles.downloadReqLabel}>Minimum</p>
-                    <ul className={styles.downloadReqList}>
-                      {card.minimum.map((req, i) => (
-                        <li key={i}>{req}</li>
-                      ))}
-                    </ul>
-                    <p className={styles.downloadRecLabel}>Recommended</p>
-                    <ul className={styles.downloadRecList}>
-                      {card.recommended.map((req, i) => (
-                        <li key={i}>{req}</li>
-                      ))}
-                    </ul>
-                    <div className={styles.downloadCardFoot}>
-                      {/* The block links to the API's tracked redirect,
-                          which resolves the latest build itself; the release
-                          fetch only adds the size. */}
-                      <DirectDownloadBlock
-                        platform={card.key}
-                        size={artifact ? formatSize(artifact.size) : undefined}
-                        variant={variant}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+              {studioCards.map((card) => (
+                <DownloadCard key={card.key} card={card} release={release} />
+              ))}
             </div>
           </section>
 

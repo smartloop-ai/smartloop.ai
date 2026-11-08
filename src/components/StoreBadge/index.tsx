@@ -286,25 +286,34 @@ export function DirectDownloadButton({
  * labels its downloads, and the visitor this page is for wants to know that
  * clicking gets them the app, not what a .dmg is.
  */
+// What the block calls each architecture, where a platform offers more than
+// one and the block has to say which build it is.
+const ARCH_LABEL = { x64: 'x86_64', arm64: 'ARM64' } as const;
+
 export function DirectDownloadBlock({
   platform,
+  arch,
   size,
   variant = 'primary',
 }: {
   platform: DirectPlatform;
+  // Set only where the platform ships more than one build (Linux); the block
+  // then names the architecture in place of who the build covers.
+  arch?: 'x64' | 'arm64';
   // Unknown until the release fetch returns; the block reads fine without it.
   size?: string;
   variant?: ButtonVariant;
 }): ReactNode {
-  const { mark, name, platform: releasePlatform, format, covers } = DIRECT_PLATFORM[platform];
-  const path = useInstallerUrl()(releasePlatform);
+  const { mark, name, platform: releasePlatform, format, covers: platformCovers } = DIRECT_PLATFORM[platform];
+  const path = useInstallerUrl()(releasePlatform, arch);
+  const covers = arch ? ARCH_LABEL[arch] : platformCovers;
 
   return (
     <a
       href={path}
       download
       className={variantClass(styles.directBlock, variant)}
-      aria-label={`Download Smartloop Studio for ${name} (${size ? `${format}, ${size}` : format})`}
+      aria-label={`Download Smartloop Studio for ${name}${arch ? ` ${ARCH_LABEL[arch]}` : ''} (${size ? `${format}, ${size}` : format})`}
     >
       <Mark name={mark} />
       <span className={styles.directBlockText}>

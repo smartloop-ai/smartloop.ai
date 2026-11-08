@@ -518,10 +518,11 @@ export default function Home(): ReactNode {
                 </p>
                 <h2 className={styles.h2}>Same agent. No window.</h2>
                 <p className={styles.sub}>
-                  Install <code>docent</code> to chat with your documents, search the web and connect MCP servers — in your scripts or over SSH, with the same models and projects as Studio.
+                  An agent harness for your terminal: build products, write code and chat with your documents, with the same models and projects as Studio.
                 </p>
                 <ul className={styles.docentPoints}>
-                  <li><Icon name="check" /><span><b>One command.</b> Sets itself up on first run.</span></li>
+                  <li><Icon name="check" /><span><b>Writes code.</b> Changes land as diffs, checked by your build until it passes.</span></li>
+                  <li><Icon name="check" /><span><b>Runs the work.</b> Commits, installs and tests, once you say so.</span></li>
                   <li><Icon name="check" /><span><b>Your files.</b> Drop a PDF on the terminal and ask.</span></li>
                   <li><Icon name="check" /><span><b>Scriptable.</b> Pipe answers with <code>--plain</code>.</span></li>
                 </ul>

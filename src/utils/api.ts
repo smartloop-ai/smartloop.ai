@@ -15,11 +15,14 @@ export function useApiBaseUrl(): string {
 /**
  * The tracked installer download for a platform. The API logs the hit,
  * rate-limits it per address, and 302s to the artifact — the bundle never
- * carries a direct CDN link a scraper could loop on.
+ * carries a direct CDN link a scraper could loop on. `arch` picks the build
+ * where a platform ships more than one (Linux: x64 and arm64).
  */
-export function useInstallerUrl(): (platform: ReleasePlatform) => string {
+export function useInstallerUrl(): (platform: ReleasePlatform, arch?: 'x64' | 'arm64') => string {
   const base = useApiBaseUrl();
-  return (platform) => `${base}/v1/releases/download/${platform}`;
+  // Without arch the API serves x64 where a platform ships both.
+  return (platform, arch) =>
+    `${base}/v1/releases/download/${platform}${arch ? `?arch=${arch}` : ''}`;
 }
 
 export type ContactRequest = {

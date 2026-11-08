@@ -107,9 +107,7 @@
 }
 
 .directCta:hover,
-.directCta:focus-visible,
-.directBlock:hover,
-.directBlock:focus-visible {
+.directCta:focus-visible {
   --dl-plate: var(--sl-white);
   --dl-ink: var(--sl-ink);
   color: var(--dl-ink);
@@ -118,8 +116,9 @@
 }
 
 /* On the download page the outline is the card's own border colour, so the
-   button sits in its card as part of it; it turns solid only on hover. The
-   light value matches the light theme's override of the card border in
+   button sits in its card as part of it. It never fills: on hover the outline
+   turns the brand pink; the card itself stays still. The light
+   value matches the light theme's override of the card border in
    pages/index.module.css. */
 .directBlock {
   --dl-edge: var(--sl-line);
@@ -133,7 +132,9 @@
 .directBlock:focus-visible,
 [data-theme='light'] .directBlock:hover,
 [data-theme='light'] .directBlock:focus-visible {
-  --dl-edge: var(--sl-white);
+  --dl-edge: var(--sl-accent);
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
 /* The home page hero's button is the one exception: the solid brand pink, for
