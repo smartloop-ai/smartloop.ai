@@ -6,20 +6,38 @@ type Shell = 'unix' | 'windows';
 // smartloop.ai/install* redirect (Cloudflare) to the scripts in the docent
 // repo, so the one-liners always hand out the current script. The deploy also
 // copies them into the site as a fallback (.github/workflows/deploy-pages.yml).
-const installCommands: Record<Shell, string> = {
+export const installCommands: Record<Shell, string> = {
   unix: 'curl -fsSL https://smartloop.ai/install | sh',
   windows: 'irm https://smartloop.ai/install.ps1 | iex',
 };
 
-// `location` tags the copy event in analytics (homepage vs /docent).
-export default function DocentInstall({ location = 'home' }: { location?: string }): ReactNode {
-  const [shell, setShell] = useState<Shell>('unix');
-  const [copied, setCopied] = useState(false);
+function CopyIcon({ done }: { done: boolean }): ReactNode {
+  const props = { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
+  return done
+    ? <svg {...props}><polyline points="20 6 9 17 4 12" /></svg>
+    : <svg {...props}><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>;
+}
 
-  // Windows visitors land on the PowerShell line; everyone else gets curl.
+// The visitor's shell: Windows gets the PowerShell line, everyone else curl.
+// Client Hints first (Chromium), then the legacy fields; macOS and Linux
+// share the curl line, so only Windows needs spotting. Renders as unix on the
+// server and switches after hydration.
+export function useInstallShell(): Shell {
+  const [shell, setShell] = useState<Shell>('unix');
   useEffect(() => {
-    if (/win/i.test(navigator.platform) || /windows/i.test(navigator.userAgent)) setShell('windows');
+    const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
+    const platform = nav.userAgentData?.platform || nav.platform || '';
+    if (/^win/i.test(platform) || /windows/i.test(nav.userAgent)) setShell('windows');
   }, []);
+  return shell;
+}
+
+// The install line for the visitor's platform, with a copy button. No
+// platform switch: the shell is detected. `location` tags the copy event in
+// analytics (homepage vs /docent); `variant="hero"` centres it.
+export default function DocentInstall({ location = 'home', variant = 'card' }: { location?: string; variant?: 'card' | 'hero' }): ReactNode {
+  const shell = useInstallShell();
+  const [copied, setCopied] = useState(false);
 
   const copy = async () => {
     try {
@@ -33,24 +51,18 @@ export default function DocentInstall({ location = 'home' }: { location?: string
   };
 
   return (
-    <div className={styles.install}>
-      <div className={styles.installTabs} role="tablist" aria-label="Platform">
-        {([['unix', 'macOS · Linux'], ['windows', 'Windows']] as const).map(([key, label]) => (
-          <button
-            key={key}
-            type="button"
-            role="tab"
-            aria-selected={shell === key}
-            className={`${styles.installTab} ${shell === key ? styles.installTabActive : ''}`}
-            onClick={() => setShell(key)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+    <div className={`${styles.install} ${variant === 'hero' ? styles.hero : ''}`}>
       <div className={styles.installRow}>
         <code><span>{shell === 'windows' ? '>' : '$'}</span>{installCommands[shell]}</code>
-        <button type="button" className={styles.copy} onClick={copy}>{copied ? 'copied' : 'copy'}</button>
+        <button
+          type="button"
+          className={styles.copy}
+          onClick={copy}
+          aria-label={copied ? 'Copied' : 'Copy the install command'}
+          title={copied ? 'Copied' : 'Copy'}
+        >
+          <CopyIcon done={copied} />
+        </button>
       </div>
     </div>
   );
