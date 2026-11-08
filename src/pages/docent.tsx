@@ -96,37 +96,39 @@ export default function Docent(): ReactNode {
             </div>
           </section>
 
+          {/* ── Demo: install to a running Rust program, narrated ── */}
           <section className={styles.shell}>
-            <div className={styles.docent}>
-              <div className={styles.docentText}>
-                <p className={styles.kicker}>What it does</p>
-                <h2 className={styles.h2}>Ask for a change. Get a build that passes.</h2>
-                <ul className={styles.docentPoints}>
-                  {points.map(([title, desc]) => (
-                    <li key={title}><Check /><span><b>{title}</b> {desc}</span></li>
-                  ))}
-                </ul>
+            <div className={styles.stage}>
+              {/* The recording carries its own window and desktop, so it
+                  gets no frame of ours on top. It is narrated, so it plays
+                  on request with sound rather than looping muted. */}
+              <div className={styles.stageWindow}>
+                <video
+                  src={require('../../docs/docent-rust-demo.mp4').default}
+                  poster="/img/docent-rust-demo-poster.jpg"
+                  className={styles.stageVideo}
+                  style={{ aspectRatio: '4 / 3' }}
+                  aria-label="Installing docent with one command, enabling MiniMax M3 with /models, and asking it to build a Rust hello world that reads input and uses match; it builds and runs it"
+                  controls
+                  preload="metadata"
+                  playsInline
+                />
               </div>
-              <div className={styles.docentTerm}>
-                <div className={styles.windowBar}>
-                  <i /><i /><i />
-                  <span className={styles.windowTitle}>docent</span>
-                  <span className={styles.pillLocal}><b /> local</span>
-                </div>
-                {/* One recording per site theme; CSS hides the other. */}
-                {(['light', 'dark'] as const).map((theme) => (
-                  <video
-                    key={theme}
-                    className={`${styles.docentVideo} ${theme === 'light' ? styles.docentLight : styles.docentDark}`}
-                    src={theme === 'light' ? require('../../docs/cli-run-latte.mp4').default : require('../../docs/cli-run-mocha.mp4').default}
-                    aria-label="docent in a terminal: the welcome card, the command list, a question and the answer with its references"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  />
+              <p className={styles.stageCaption} style={{ marginTop: 20 }}>
+                install → pick an open model → a Rust program that builds and runs · 1:33
+              </p>
+            </div>
+          </section>
+
+          <section className={styles.shell}>
+            <div className={styles.section}>
+              <p className={styles.kicker}>What it does</p>
+              <h2 className={styles.h2}>Ask for a change. Get a build that passes.</h2>
+              <ul className={styles.docentPoints}>
+                {points.map(([title, desc]) => (
+                  <li key={title}><Check /><span><b>{title}</b> {desc}</span></li>
                 ))}
-              </div>
+              </ul>
             </div>
           </section>
 
