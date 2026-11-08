@@ -102,3 +102,67 @@
 .copy:hover {
   background: var(--sl-accent-soft);
 }
+
+/* ── hero variant: no outer card, tabs centred over one wide command bar,
+      and a quiet copy button so the command is what you see first. ── */
+.hero {
+  max-width: 600px;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+[data-theme='dark'] .hero {
+  box-shadow: none;
+}
+
+.hero .installTabs {
+  align-self: center;
+  margin: 0;
+}
+
+.hero .installRow {
+  align-self: stretch;
+  margin: 0;
+  gap: 14px;
+  padding: 10px 10px 10px 20px;
+  border-radius: 14px;
+  background: var(--sl-panel);
+  box-shadow: 0 1px 2px rgba(10, 10, 20, 0.04), 0 12px 40px -12px rgba(10, 10, 20, 0.12);
+}
+
+[data-theme='dark'] .hero .installRow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 40px -12px rgba(0, 0, 0, 0.6);
+}
+
+.hero .installRow code {
+  font-size: 0.92rem;
+  text-align: left;
+  scrollbar-width: none;
+}
+
+.hero .copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--sl-ground);
+  color: var(--sl-white);
+  border: 1px solid var(--sl-line);
+  box-shadow: none;
+  padding: 8px 14px;
+}
+
+.hero .copy:hover {
+  background: var(--sl-ground);
+  border-color: var(--sl-accent);
+  color: var(--sl-accent-text);
+}
+
+@media (max-width: 640px) {
+  .hero .installRow code {
+    font-size: 0.78rem;
+  }
+}
