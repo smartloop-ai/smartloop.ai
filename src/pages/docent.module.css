@@ -36,3 +36,95 @@
     padding-bottom: 72px;
   }
 }
+
+/* ── how it works: five stages, readable at any width ── */
+.loop {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 28px;
+}
+
+.loop h3 {
+  margin-top: 14px;
+}
+
+/* ── languages table ── */
+.table {
+  margin-top: 36px;
+  border: 1px solid var(--sl-line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--sl-panel);
+}
+
+.tableHead,
+.tableRow {
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 20px;
+}
+
+.tableHead {
+  font-family: var(--sl-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sl-dim);
+  border-bottom: 1px solid var(--sl-line);
+}
+
+.tableRow + .tableRow {
+  border-top: 1px solid var(--sl-line);
+}
+
+.tableRow span {
+  color: var(--sl-white);
+  font-size: 0.92rem;
+}
+
+.tableRow code {
+  justify-self: start;
+  font-size: 0.8rem;
+}
+
+/* ── model / platform cards ── */
+.cards {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  padding: 22px;
+  border: 1px solid var(--sl-line);
+  border-radius: 14px;
+  background: var(--sl-panel);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .tableHead,
+  .tableRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .tableHead {
+    display: none;
+  }
+}
