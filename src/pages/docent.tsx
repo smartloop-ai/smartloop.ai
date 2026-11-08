@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import DocentInstall from '../components/DocentInstall';
 import styles from './home.module.css';
+import local from './docent.module.css';
 
 // smartloop.ai/docent: the page to link from posts and launches, so docent
 // traffic shows up as its own page in analytics (with any utm_* tags on the
@@ -133,10 +134,10 @@ export default function Docent(): ReactNode {
           </section>
 
           <section className={styles.shell}>
-            <div className={styles.section}>
-              <h2 className={styles.h2}>Get started</h2>
-              <p className={styles.sub}>Three steps, then you're coding.</p>
-              <ol className={styles.steps}>
+            <div className={`${styles.section} ${local.lastSection}`}>
+              <p className={styles.kicker}>Get started</p>
+              <h2 className={styles.h2}>Three steps, then you're coding.</h2>
+              <ol className={`${styles.steps} ${local.steps}`}>
                 {steps.map(([title, desc], i) => (
                   <li key={title}>
                     <span className={styles.stepNum}>{String(i + 1).padStart(2, '0')}</span>

@@ -1,0 +1,22 @@
+/* /docent only: tweaks on top of home.module.css. */
+
+/* Three steps, three columns (the homepage grid is four wide). */
+.steps {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* The page ends here, so leave room above the footer. */
+.lastSection {
+  padding-bottom: 112px;
+}
+
+@media (max-width: 640px) {
+  .steps {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  .lastSection {
+    padding-bottom: 72px;
+  }
+}
