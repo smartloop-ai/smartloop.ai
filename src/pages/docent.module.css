@@ -1,23 +1,31 @@
 /* /docent only: tweaks on top of home.module.css. */
 
-/* Three steps, three columns (the homepage grid is four wide). */
-.steps {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+/* Get started: rows like "How it works", the command in a roomy box of
+   its own beside each step. Long commands wrap rather than clip. */
+.stepRow {
+  align-items: center !important;
 }
 
-/* The thing you type at each step: one line, scrolls rather than wraps. */
+.stepRow .loopNum {
+  align-self: start;
+  padding-top: 5px;
+}
+
+.stepRow h3 {
+  margin: 0 0 6px !important;
+}
+
 .stepCode {
   display: block;
-  margin: 10px 0 12px;
-  padding: 10px 12px;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
+  padding: 16px 18px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
   border: 1px solid var(--sl-line);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--sl-panel);
   font-family: var(--sl-mono);
-  font-size: 0.76rem;
+  font-size: 0.86rem;
   color: var(--sl-white);
 }
 
@@ -27,11 +35,6 @@
 }
 
 @media (max-width: 640px) {
-  .steps {
-    grid-template-columns: 1fr;
-    row-gap: 32px;
-  }
-
   .lastSection {
     padding-bottom: 72px;
   }
@@ -138,7 +141,8 @@
     row-gap: 8px;
   }
 
-  .loop li p {
+  .loop li p,
+  .stepCode {
     grid-column: 2;
   }
 
