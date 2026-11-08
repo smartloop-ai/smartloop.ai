@@ -119,7 +119,7 @@ export default function Header() {
 					<nav className="sl-menu__body">
 						<ul className="sl-menu__list">
 							<li className="sl-menu__item"><Link to="/pricing" className="sl-menu__link" onClick={closeMenu}>Get started</Link></li>
-							<li className="sl-menu__item"><Link to="/docent" className="sl-menu__link" onClick={closeMenu}>Coding</Link></li>
+							<li className="sl-menu__item"><Link to="/docent" className="sl-menu__link" onClick={closeMenu}>Docent</Link></li>
 							<li className="sl-menu__item"><Link to="/docs/intro" className="sl-menu__link" onClick={closeMenu}>Docs</Link></li>
 						</ul>
 					</nav>
