@@ -331,13 +331,15 @@ export default function Docent(): ReactNode {
               <p className={styles.kicker}>Get started</p>
               <h2 className={styles.h2}>From install to a passing build.</h2>
               <p className={styles.sub}>Three things to type. docent does the rest.</p>
-              <ol className={`${styles.steps} ${local.steps}`}>
+              <ol className={local.loop}>
                 {steps.map(({ title, code, desc }, i) => (
-                  <li key={title}>
-                    <span className={styles.stepNum}>{String(i + 1).padStart(2, '0')}</span>
-                    <p className={styles.stepTitle}>{title}</p>
+                  <li key={title} className={local.stepRow}>
+                    <span className={local.loopNum}>{String(i + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h3 className={styles.stepTitle}>{title}</h3>
+                      <p className={styles.stepDesc}>{desc}</p>
+                    </div>
                     <code className={local.stepCode}>{i === 0 ? installCommands[shell] : code}</code>
-                    <p className={styles.stepDesc}>{desc}</p>
                   </li>
                 ))}
               </ol>
