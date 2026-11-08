@@ -133,8 +133,8 @@ export default function Docent(): ReactNode {
           <section className={styles.shell}>
             <div className={styles.stage}>
               {/* The recording carries its own window and desktop, so it
-                  gets no frame of ours on top. It is narrated, so it plays
-                  on request with sound rather than looping muted. */}
+                  gets no frame of ours on top. It plays on request, muted by
+                  default; the narration is there if you unmute. */}
               <div className={styles.stageWindow}>
                 <video
                   src={require('../../docs/docent-rust-demo.mp4').default}
@@ -143,6 +143,7 @@ export default function Docent(): ReactNode {
                   style={{ aspectRatio: '4 / 3' }}
                   aria-label="Installing docent with one command, enabling MiniMax M3 with /models, and asking it to build a Rust hello world that reads input and uses match; it builds and runs it"
                   controls
+                  muted
                   preload="metadata"
                   playsInline
                 />
